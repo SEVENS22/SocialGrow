@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialGrow | #1 Premium Social Media Growth Agency</title>
+    <meta name="description" content="Get high-quality Instagram followers, TikTok views, and YouTube subscribers instantly. Safe, secure, and organic-style growth for creators and brands.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/">
+    <meta property="og:title" content="SocialGrow | Premium Social Media Influence">
+    <meta property="og:description" content="Skyrocket your social presence with elite acceleration services.">
+    <meta property="og:image" content="https://yoursite.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="SocialGrow | Premium Social Influence">
+    <meta property="twitter:description" content="Skyrocket your social presence with elite acceleration services.">
+    
+    <!-- Scripts & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#f0f4ff', 100: '#e0e9ff', 200: '#c1d3ff', 300: '#a2bdff', 400: '#83a7ff', 500: '#6491ff', 600: '#5074cc', 700: '#3c5799', 800: '#283a66', 900: '#141d33' },
+                        accent: '#FF3366',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'reveal': 'reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .reveal-on-scroll { opacity: 1; }
+        .reveal-on-scroll.active { animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #6491ff 0%, #FF3366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+        .card-shadow:hover {
+            box-shadow: 0 30px 60px -12px rgba(100, 145, 255, 0.2);
+            transform: translateY(-8px);
+        }
+        .verified-badge { color: #1d9bf0; filter: drop-shadow(0 0 2px rgba(29, 155, 240, 0.5)); }
+        
+        #recent-sale {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            transform: translateX(-150%);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+        }
+        #recent-sale.show { transform: translateX(0); }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 4px rgba(100, 145, 255, 0.2);
+            border-color: #6491ff;
+        }
+
+        .cta-glow:hover {
+            box-shadow: 0 0 20px rgba(100, 145, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-900 overflow-x-hidden">
+
+    <!-- Notificação de Venda Recente -->
+    <div id="recent-sale" class="glass shadow-2xl rounded-2xl p-4 border-l-4 border-primary-500 flex items-center space-x-4 max-w-sm">
+        <div class="relative">
+            <div class="bg-primary-100 p-3 rounded-xl">
+                <i class="fas fa-shopping-bag text-primary-600 text-lg"></i>
+            </div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+        </div>
+        <div>
+            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Verified Purchase</p>
+            <p class="text-sm font-semibold text-slate-800"><span id="buyer-name" class="text-primary-600">someone</span> just bought <span id="purchase-item" class="font-bold">1k Followers</span></p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl mx-auto rounded-2xl z-[100] transition-all duration-300">
+        <div class="px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-200">
+                    <i class="fas fa-rocket text-white"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-900 hidden sm:block">
+                    SocialGrow <i class="fas fa-check-circle verified-badge text-sm align-top ml-1"></i>
+                </span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
+                <a href="#instagram" class="hover:text-primary-600 transition-colors">Instagram</a>
+                <a href="#tiktok" class="hover:text-primary-600 transition-colors">TikTok</a>
+                <a href="#youtube" class="hover:text-primary-600 transition-colors">YouTube</a>
+                <a href="#faq" class="hover:text-primary-600 transition-colors">Support</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="https://wa.me/258834592663" id="nav-cta" class="bg-primary-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primary-700 transition shadow-lg shadow-primary-200 active:scale-95 cta-glow">
+                    GET STARTED
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-40 pb-24 overflow-hidden">
+        <!-- Abstract Background -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-200 rounded-full filter blur-[120px] animate-pulse-slow"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent rounded-full filter blur-[120px] opacity-30 animate-pulse-slow"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 text-center relative reveal-on-scroll">
+            <div class="inline-flex items-center space-x-2 bg-white/50 border border-white px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest text-primary-700 mb-8 uppercase backdrop-blur-sm">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+                </span>
+                <span>The Industry Leader in Social Growth</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 leading-[1.1] tracking-tight">
+                Scale Your <br>
+                <span class="text-gradient">Digital Empire</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Unlock rapid, organic-style growth with our elite social acceleration network. Trusted by 15k+ creators and businesses worldwide.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+                <div class="glass px-6 py-4 rounded-2xl flex items-center space-x-4 animate-float">
+                    <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-red-200">
+                        <i class="fas fa-bolt text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] font-bold text-red-500 uppercase">Flash Sale</p>
+                        <p id="timer" class="text-xl font-mono font-bold text-slate-800">00:00:00</p>
+                    </div>
+                </div>
+                <div class="flex -space-x-3">
+                    <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="User">
+                    <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="User">
+                    <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="User">
+                    <div class="w-10 h-10 rounded-full border-2 border-white bg-primary-100 flex items-center justify-center text-[10px] font-bold text-primary-700 shadow-sm">15k+</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
+                    <i class="fas fa-shield-check text-primary-500 mb-2"></i>
+                    <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">Secure Payment</p>
+                </div>
+                <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
+                    <i class="fas fa-clock text-orange-500 mb-2"></i>
+                    <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">Instant Start</p>
+                </div>
+                <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
+                    <i class="fas fa-user-check text-green-500 mb-2"></i>
+                    <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">Real Quality</p>
+                </div>
+                <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
+                    <i class="fas fa-headset text-purple-500 mb-2"></i>
+                    <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">24/7 VIP Support</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trusted By -->
+    <div class="py-10 bg-white/50 backdrop-blur-sm border-y border-slate-100 overflow-hidden reveal-on-scroll">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+            <i class="fab fa-cc-paypal text-4xl"></i>
+            <i class="fab fa-cc-visa text-4xl"></i>
+            <i class="fab fa-cc-mastercard text-4xl"></i>
+            <i class="fab fa-cc-stripe text-4xl"></i>
+            <i class="fab fa-cc-apple-pay text-4xl"></i>
+        </div>
+    </div>
+
+    <!-- Instagram Section -->
+    <section id="instagram" class="py-24 max-w-7xl mx-auto px-6 reveal-on-scroll">
+        <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+            <div class="max-w-2xl">
+                <div class="inline-block p-3 bg-white rounded-2xl shadow-xl mb-6 transition-transform hover:rotate-6">
+                    <i class="fab fa-instagram text-4xl text-transparent bg-clip-text bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Instagram <span class="text-primary-600">Acceleration</span></h2>
+                <p class="text-slate-500 text-lg">High-retention followers that actually boost your account authority.</p>
+            </div>
+            <div class="bg-primary-50 px-4 py-2 rounded-xl border border-primary-100 flex items-center space-x-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-xs font-bold text-primary-700 uppercase">Service Status: Online</span>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100 transition-all duration-300 group">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-slate-50 w-12 h-12 rounded-2xl flex items-center justify-center group-hover:bg-primary-50 transition-colors">
+                        <i class="fas fa-users text-slate-400 group-hover:text-primary-600"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Starter</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Trial Pack</h3>
+                <p class="text-primary-600 font-extrabold mb-6 text-sm">500 FOLLOWERS</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-slate-400">$</span>
+                    <span class="text-5xl font-black text-slate-900 tracking-tighter">2.39</span>
+                </div>
+                
+                <div class="mb-8 space-y-4">
+                    <input type="text" placeholder="@your_username" class="w-full bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all input-focus" onkeyup="updateBuyLink(this, 'IG 500 Followers', 2.39)">
+                    <p class="text-[10px] text-slate-400 text-center font-medium uppercase tracking-wider">No password required</p>
+                </div>
+
+                <button onclick="handleBuy(this)" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
+                    <span>SECURE CHECKOUT</span>
+                    <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+
+            <!-- Card 2 (Popular) -->
+            <div class="bg-primary-600 p-8 rounded-[2.5rem] shadow-2xl shadow-primary-200 transform md:scale-105 relative border border-primary-500 text-white transition-all duration-300 hover:scale-[1.08] group">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-accent text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">Elite Offer</div>
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-crown text-white"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-primary-200">Best Seller</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Elite Pack</h3>
+                <p class="text-primary-100 font-extrabold mb-6 text-sm">1,000 FOLLOWERS</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-primary-300">$</span>
+                    <span class="text-5xl font-black text-white tracking-tighter">4.99</span>
+                </div>
+
+                <div class="mb-8 space-y-4">
+                    <input type="text" placeholder="@your_username" class="w-full bg-white/10 border border-white/20 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all focus:bg-white/20 placeholder:text-primary-200">
+                    <p class="text-[10px] text-primary-200 text-center font-medium uppercase tracking-wider">Direct Checkout via PayPal</p>
+                </div>
+
+                <a href="https://www.paypal.com/invoice/p/#PBYU38WGXLCBC9JG" target="_blank" class="w-full bg-white text-primary-600 py-4 rounded-2xl font-black hover:bg-primary-50 transition shadow-xl shadow-primary-800 flex items-center justify-center space-x-2 group-active:scale-95">
+                    <span>BUY WITH PAYPAL</span>
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100 transition-all duration-300 group">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-slate-50 w-12 h-12 rounded-2xl flex items-center justify-center group-hover:bg-pink-50 transition-colors">
+                        <i class="fas fa-heart text-slate-400 group-hover:text-pink-500"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Engagement</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Like Boost</h3>
+                <p class="text-pink-600 font-extrabold mb-6 text-sm">1,000 LIKES</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-slate-400">$</span>
+                    <span class="text-5xl font-black text-slate-900 tracking-tighter">2.80</span>
+                </div>
+
+                <div class="mb-8 space-y-4">
+                    <input type="text" placeholder="Post Link" class="w-full bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all input-focus" onkeyup="updateBuyLink(this, 'IG 1000 Likes', 2.80)">
+                    <p class="text-[10px] text-slate-400 text-center font-medium uppercase tracking-wider">Supports Reels & Posts</p>
+                </div>
+
+                <button onclick="handleBuy(this)" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-pink-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-pink-600 group-active:scale-95">
+                    <span>SECURE CHECKOUT</span>
+                    <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Networks -->
+    <section class="py-24 bg-slate-900 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-[40%] h-[100%] bg-primary-600/10 filter blur-[120px] -z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 reveal-on-scroll">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Multi-Platform Dominance</h2>
+                <p class="text-slate-400 text-lg">Scale your presence across all major networks simultaneously.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- TikTok -->
+                <div id="tiktok" class="glass-dark p-10 rounded-[3rem] border-white/5 hover:border-white/20 transition-colors">
+                    <div class="flex items-center space-x-4 mb-10">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center transition-transform hover:rotate-12">
+                            <i class="fab fa-tiktok text-3xl text-black"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-white">TikTok Viral</h3>
+                            <p class="text-slate-400 text-sm">For You Page optimization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">1,000 TikTok Followers</p>
+                                <p class="text-slate-400 text-xs">High Retention Profiles</p>
+                            </div>
+                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-white tracking-tighter">$4.79</span>
+                                <input type="text" placeholder="@user" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-primary-400">
+                                <a href="#" onclick="updateOtherLink(this, 'TikTok 1000 Followers', 4.79)" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">BUY</a>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">5,000 Instant Views</p>
+                                <p class="text-slate-400 text-xs">Safe & Natural Growth</p>
+                            </div>
+                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-white tracking-tighter">$1.59</span>
+                                <input type="text" placeholder="Link" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-primary-400">
+                                <a href="#" onclick="updateOtherLink(this, 'TikTok 5000 Views', 1.59)" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">BUY</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YouTube -->
+                <div id="youtube" class="glass-dark p-10 rounded-[3rem] border-white/5 hover:border-white/20 transition-colors">
+                    <div class="flex items-center space-x-4 mb-10">
+                        <div class="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/30 transition-transform hover:rotate-12">
+                            <i class="fab fa-youtube text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-white">YouTube Authority</h3>
+                            <p class="text-slate-400 text-sm">Monetization & Ranking</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">500 Subscribers</p>
+                                <p class="text-slate-400 text-xs">Non-Drop Guarantee</p>
+                            </div>
+                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-red-500 tracking-tighter">$12.00</span>
+                                <input type="text" placeholder="Channel" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-red-400">
+                                <a href="#" onclick="updateOtherLink(this, 'YouTube 500 Subscribers', 12.00)" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">BUY</a>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">4,000 Watch Hours</p>
+                                <p class="text-slate-400 text-xs">Fast Track Monetization</p>
+                            </div>
+                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-red-500 tracking-tighter">$36.00</span>
+                                <input type="text" placeholder="Link" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-red-400">
+                                <a href="#" onclick="updateOtherLink(this, 'YouTube 4000 Watch Hours', 36.00)" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">BUY</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-24 max-w-4xl mx-auto px-6 reveal-on-scroll">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold mb-4">Questions? We Have <span class="text-primary-600">Answers.</span></h2>
+            <p class="text-slate-500">Everything you need to know about our elite services.</p>
+        </div>
+
+        <div class="space-y-4">
+            <details class="group bg-white rounded-3xl border border-slate-100 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
+                <summary class="flex items-center justify-between">
+                    <h4 class="text-lg font-bold text-slate-800">Is this service safe for my account?</h4>
+                    <span class="relative flex h-5 w-5 shrink-0">
+                        <i class="fas fa-plus absolute inset-0 opacity-100 group-open:opacity-0 transition-opacity"></i>
+                        <i class="fas fa-minus absolute inset-0 opacity-0 group-open:opacity-100 transition-opacity"></i>
+                    </span>
+                </summary>
+                <div class="mt-4 text-slate-500 leading-relaxed text-sm">
+                    Yes, 100%. We use proprietary, secure delivery methods that strictly adhere to platform guidelines. We have never had an account banned in 6+ years of service.
+                </div>
+            </details>
+
+            <details class="group bg-white rounded-3xl border border-slate-100 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
+                <summary class="flex items-center justify-between">
+                    <h4 class="text-lg font-bold text-slate-800">How long does delivery take?</h4>
+                    <span class="relative flex h-5 w-5 shrink-0">
+                        <i class="fas fa-plus absolute inset-0 opacity-100 group-open:opacity-0 transition-opacity"></i>
+                        <i class="fas fa-minus absolute inset-0 opacity-0 group-open:opacity-100 transition-opacity"></i>
+                    </span>
+                </summary>
+                <div class="mt-4 text-slate-500 leading-relaxed text-sm">
+                    Most orders start within 5-15 minutes of payment. Larger packages are delivered gradually over 24-72 hours to ensure natural-looking growth.
+                </div>
+            </details>
+
+            <details class="group bg-white rounded-3xl border border-slate-100 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
+                <summary class="flex items-center justify-between">
+                    <h4 class="text-lg font-bold text-slate-800">What is the "Refill Guarantee"?</h4>
+                    <span class="relative flex h-5 w-5 shrink-0">
+                        <i class="fas fa-plus absolute inset-0 opacity-100 group-open:opacity-0 transition-opacity"></i>
+                        <i class="fas fa-minus absolute inset-0 opacity-0 group-open:opacity-100 transition-opacity"></i>
+                    </span>
+                </summary>
+                <div class="mt-4 text-slate-500 leading-relaxed text-sm">
+                    If any followers drop below your purchased amount within the first 90 days, our system automatically detects it and refills them at no extra cost to you.
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-24 text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rocket text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-black tracking-tighter">SocialGrow</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-8">Elevating digital influence through data-driven growth strategies. Join the elite elite circle of content creators.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-primary-500">Quick Links</h5>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><a href="#instagram" class="hover:text-white transition">Instagram</a></li>
+                        <li><a href="#tiktok" class="hover:text-white transition">TikTok</a></li>
+                        <li><a href="#youtube" class="hover:text-white transition">YouTube</a></li>
+                        <li><a href="#faq" class="hover:text-white transition">Help Center</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-primary-500">Company</h5>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-500 text-xs">© 2024 SocialGrow Global. All rights reserved. Not affiliated with Instagram, TikTok or YouTube.</p>
+                <div class="flex items-center space-x-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    <i class="fas fa-lock-alt text-green-500"></i>
+                    <span>SSL SECURED CHECKOUT</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/258834592663" id="whatsapp-btn" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[100] group">
+        <i class="fab fa-whatsapp text-3xl"></i>
+        <span class="absolute right-20 bg-white text-slate-900 px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Chat with Support</span>
+    </a>
+
+    <script>
+        // WhatsApp Integration Configuration
+        const WHATSAPP_NUMBER = "258834592663"; // Substitua pelo seu número
+        
+        function updateBuyLink(input, product, price) {
+            const username = input.value.trim();
+            const btn = input.closest('div').nextElementSibling;
+            
+            if (username) {
+                const message = `Hello! I'd like to buy ${product} ($${price}). My username/link is: ${username}`;
+                const encodedMessage = encodeURIComponent(message);
+                btn.setAttribute('data-link', `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`);
+            } else {
+                btn.removeAttribute('data-link');
+            }
+        }
+
+        function updateOtherLink(btn, product, price) {
+            const input = btn.previousElementSibling;
+            const val = input.value.trim();
+            if (!val) {
+                input.classList.remove('hidden');
+                input.focus();
+                return;
+            }
+            const message = `Hello! I'd like to buy ${product} ($${price}). Link: ${val}`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function handleBuy(btn) {
+            const link = btn.getAttribute('data-link');
+            if (link) {
+                window.open(link, '_blank');
+            } else {
+                const input = btn.previousElementSibling.querySelector('input');
+                input.classList.add('border-red-400', 'bg-red-50');
+                input.focus();
+                setTimeout(() => {
+                    input.classList.remove('border-red-400', 'bg-red-50');
+                }, 2000);
+            }
+        }
+
+        // Persistent Timer Logic
+        function initTimer(duration, element) {
+            const STORAGE_KEY = 'sg_expiry';
+            let expiry = localStorage.getItem(STORAGE_KEY);
+            const now = Date.now();
+
+            if (!expiry || parseInt(expiry) < now) {
+                expiry = now + (duration * 1000);
+                localStorage.setItem(STORAGE_KEY, expiry);
+            }
+
+            function update() {
+                const remaining = expiry - Date.now();
+                if (remaining <= 0) {
+                    expiry = Date.now() + (duration * 1000);
+                    localStorage.setItem(STORAGE_KEY, expiry);
+                    return;
+                }
+                
+                const h = Math.floor(remaining / 3600000).toString().padStart(2, '0');
+                const m = Math.floor((remaining % 3600000) / 60000).toString().padStart(2, '0');
+                const s = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
+                element.textContent = `${h}:${m}:${s}`;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        // Recent Sales Logic
+        const buyers = ["James W.", "Emma L.", "Lucas M.", "Sophie K.", "Liam R.", "Olivia S.", "Marco P.", "Elena V.", "Noah G.", "Mia T."];
+        const items = ["500 IG Followers", "1k Likes", "2k IG Followers", "500 YT Subs", "5k TikTok Views", "10k Views", "Influencer Pack"];
+        const saleToast = document.getElementById('recent-sale');
+        const buyerSpan = document.getElementById('buyer-name');
+        const itemSpan = document.getElementById('purchase-item');
+
+        function showSale() {
+            buyerSpan.innerText = buyers[Math.floor(Math.random() * buyers.length)];
+            itemSpan.innerText = items[Math.floor(Math.random() * items.length)];
+            saleToast.classList.add('show');
+            setTimeout(() => saleToast.classList.remove('show'), 5000);
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('top-0', 'w-full', 'rounded-none');
+                nav.classList.remove('top-4', 'w-[95%]', 'rounded-2xl');
+            } else {
+                nav.classList.remove('top-0', 'w-full', 'rounded-none');
+                nav.classList.add('top-4', 'w-[95%]', 'rounded-2xl');
+            }
+        });
+
+        // Scroll Animations with Intersection Observer
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        window.onload = () => {
+            initTimer(900, document.getElementById('timer'));
+            setInterval(showSale, 15000);
+            setTimeout(showSale, 3000);
+
+            // Start observing scroll animations
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        };
+    </script>
+</body>
+</html>
