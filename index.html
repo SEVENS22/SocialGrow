@@ -351,7 +351,7 @@
                             <div class="flex items-center space-x-6 w-full sm:w-auto">
                                 <span class="text-2xl font-black text-white tracking-tighter">$4.79</span>
                                 <input type="text" placeholder="@user" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-primary-400">
-                                <a href="#" onclick="updateOtherLink(this, 'TikTok 1000 Followers', 4.79)" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">BUY</a>
+                                <a href="https://www.paypal.com/invoice/p/#PBYU38WGXLCBC9JG" target="_blank" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</a>
                             </div>
                         </div>
 
@@ -490,10 +490,10 @@
                 <div>
                     <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-primary-500">Company</h5>
                     <ul class="space-y-4 text-slate-400 text-sm">
-                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('terms')" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('privacy')" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white transition">Refund Policy</a></li>
+                        <li><a href="https://wa.me/258834592663" class="hover:text-white transition">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -506,6 +506,18 @@
             </div>
         </div>
     </footer>
+
+    <!-- Policy Modal -->
+    <div id="policy-modal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[200] hidden items-center justify-center p-6">
+        <div class="glass max-w-2xl w-full max-h-[80vh] overflow-y-auto rounded-[2.5rem] p-8 md:p-12 relative">
+            <button onclick="closePolicy()" class="absolute top-6 right-6 w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center hover:bg-primary-100 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="policy-content" class="prose prose-slate">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- WhatsApp Floating -->
     <a href="https://wa.me/258834592663" id="whatsapp-btn" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[100] group">
@@ -609,6 +621,53 @@
                 nav.classList.add('top-4', 'w-[95%]', 'rounded-2xl');
             }
         });
+
+        // Policy Logic
+        const policies = {
+            terms: `
+                <h2 class="text-3xl font-black mb-6">Terms of Service</h2>
+                <p class="mb-4">By using SocialGrow, you agree to the following terms:</p>
+                <ul class="list-disc pl-5 space-y-2 mb-6">
+                    <li>We are not affiliated with Instagram, TikTok, or YouTube.</li>
+                    <li>You use our services at your own risk. We are not responsible for account restrictions.</li>
+                    <li>You must provide a valid public profile link/username.</li>
+                    <li>Delivery times are estimates and may vary based on platform updates.</li>
+                </ul>
+            `,
+            privacy: `
+                <h2 class="text-3xl font-black mb-6">Privacy Policy</h2>
+                <p class="mb-4">Your privacy is important to us:</p>
+                <ul class="list-disc pl-5 space-y-2 mb-6">
+                    <li>We do not store your passwords. We only need your username or profile link.</li>
+                    <li>We do not sell your personal data to third parties.</li>
+                    <li>Cookies are used only to improve your experience (like the sale timer).</li>
+                </ul>
+            `,
+            refund: `
+                <h2 class="text-3xl font-black mb-6">Refund Policy</h2>
+                <p class="mb-4">Our commitment to your satisfaction:</p>
+                <ul class="list-disc pl-5 space-y-2 mb-6">
+                    <li>Full refunds are granted only if the service is not delivered within 7 days.</li>
+                    <li>No refunds for completed orders or if the user provided an incorrect/private link.</li>
+                    <li>The 90-day refill guarantee covers any drops in followers/likes.</li>
+                </ul>
+            `
+        };
+
+        function showPolicy(type) {
+            document.getElementById('policy-content').innerHTML = policies[type];
+            const modal = document.getElementById('policy-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicy() {
+            const modal = document.getElementById('policy-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
 
         // Scroll Animations with Intersection Observer
         const observerOptions = {
