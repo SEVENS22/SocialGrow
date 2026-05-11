@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order | SocialGrow</title>
+    <meta name="description" content="Track your SocialGrow order status. View delivery progress for Instagram followers, TikTok views, and YouTube subscribers.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#f0f4ff', 100: '#e0e9ff', 200: '#c1d3ff', 300: '#a2bdff', 400: '#83a7ff', 500: '#6491ff', 600: '#5074cc', 700: '#3c5799', 800: '#283a66', 900: '#141d33' },
+                        accent: '#FF3366',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .dark { color-scheme: dark; }
+        .dark body { background: #0f172a; color: #f1f5f9; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="glass dark:glass-dark fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl mx-auto rounded-2xl z-[100] bg-white/80 dark:bg-[#1e293b]/90 border border-white/20 dark:border-white/10 backdrop-blur-xl">
+        <div class="px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-rocket text-white"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight dark:text-white">SocialGrow</span>
+            </div>
+            <a href="index.html" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary-600">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-24 px-6 max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold mb-4">Track Your <span class="text-primary-600">Order</span></h1>
+            <p class="text-slate-600 dark:text-slate-400">Enter your order ID or phone number to check your delivery status.</p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="bg-white dark:bg-[#1e293b] rounded-[2.5rem] p-8 shadow-xl dark:shadow-2xl border border-slate-100 dark:border-slate-700">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Order ID or Phone Number</label>
+                    <input type="text" id="search-input" placeholder="Ex: #SG12345 ou seu WhatsApp" class="w-full bg-slate-50 dark:bg-[#334155] border-2 border-slate-200 dark:border-slate-600 px-5 py-4 rounded-2xl text-sm font-medium outline-none transition-all focus:border-primary-500 dark:text-white">
+                </div>
+                <button onclick="trackOrder()" class="w-full bg-primary-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-primary-700 transition shadow-xl flex items-center justify-center space-x-2">
+                    <i class="fas fa-search"></i>
+                    <span>TRACK ORDER</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Status (Hidden by default) -->
+        <div id="order-result" class="hidden mt-8">
+            <div class="bg-white dark:bg-[#1e293b] rounded-[2.5rem] p-8 shadow-xl border border-slate-100 dark:border-slate-700">
+                <div class="text-center mb-6">
+                    <div id="status-icon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-100">
+                        <i class="fas fa-check text-2xl text-green-600"></i>
+                    </div>
+                    <h3 id="status-title" class="text-2xl font-bold">Order Found!</h3>
+                    <p id="status-subtitle" class="text-slate-600 dark:text-slate-400 mt-2">Your order is being processed</p>
+                </div>
+
+                <!-- Progress Steps -->
+                <div class="relative">
+                    <div class="absolute top-5 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-700">
+                        <div id="progress-bar" class="h-full bg-primary-600 transition-all duration-500" style="width: 50%"></div>
+                    </div>
+                    <div class="flex justify-between relative">
+                        <div class="text-center">
+                            <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center text-white mx-auto mb-2">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <p class="text-xs font-bold">Confirmed</p>
+                        </div>
+                        <div class="text-center">
+                            <div id="step-2" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 mx-auto mb-2">
+                                <i class="fas fa-spinner"></i>
+                            </div>
+                            <p class="text-xs font-bold text-slate-500">Processing</p>
+                        </div>
+                        <div class="text-center">
+                            <div id="step-3" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 mx-auto mb-2">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <p class="text-xs font-bold text-slate-500">Delivered</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Details -->
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400">Order ID</p>
+                            <p id="order-id" class="font-bold dark:text-white">#SG12345</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400">Product</p>
+                            <p id="order-product" class="font-bold dark:text-white">1,000 Followers</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400">Date</p>
+                            <p id="order-date" class="font-bold dark:text-white">May 12, 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400">Status</p>
+                            <p id="order-status" class="font-bold text-green-600">Processing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Support -->
+                <div class="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-2xl">
+                    <p class="text-sm text-center dark:text-slate-300">
+                        <i class="fab fa-whatsapp text-green-500 mr-2"></i>
+                        Need help? <a href="https://wa.me/258834592663" class="text-primary-600 font-bold">Chat with Support</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Order ID hint -->
+        <div class="mt-8 text-center">
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+                <i class="fas fa-info-circle mr-1"></i>
+                Example: #SG123456 or your WhatsApp number
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-8 text-white text-center">
+        <p class="text-slate-400 text-sm">&copy; 2026 SocialGrow. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check for dark mode
+        if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        function trackOrder() {
+            const input = document.getElementById('search-input').value.trim();
+            const result = document.getElementById('order-result');
+
+            if (!input) {
+                document.getElementById('search-input').classList.add('border-red-400');
+                return;
+            }
+
+            // Show result with mock data (in real app, this would call an API)
+            document.getElementById('order-id').textContent = '#SG' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            document.getElementById('order-product').textContent = '1,000 Instagram Followers';
+            document.getElementById('order-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            result.classList.remove('hidden');
+
+            // Simulate progress
+            setTimeout(() => {
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('step-2').classList.remove('bg-slate-200', 'text-slate-500');
+                document.getElementById('step-2').classList.add('bg-primary-600', 'text-white');
+                document.getElementById('order-status').textContent = 'Delivered';
+                document.getElementById('status-subtitle').textContent = 'Your order has been delivered!';
+            }, 2000);
+        }
+
+        // Enter key to search
+        document.getElementById('search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') trackOrder();
+        });
+    </script>
+</body>
+</html>

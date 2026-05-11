@@ -22,15 +22,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SocialGrow",
+      "url": "https://socialgrow.top",
+      "logo": "https://socialgrow.top/logo.png",
+      "description": "Premium social media growth agency. Get Instagram followers, TikTok views, and YouTube subscribers instantly.",
+      "sameAs": [
+        "https://instagram.com/socialgrow",
+        "https://twitter.com/socialgrow"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+258834592663",
+        "contactType": "customer service",
+        "availableTime": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "15847"
+      }
+    }
+    </script>
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
                         primary: { 50: '#f0f4ff', 100: '#e0e9ff', 200: '#c1d3ff', 300: '#a2bdff', 400: '#83a7ff', 500: '#6491ff', 600: '#5074cc', 700: '#3c5799', 800: '#283a66', 900: '#141d33' },
                         accent: '#FF3366',
+                        dark: { 900: '#0f172a', 800: '#1e293b', 700: '#334155' }
                     },
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -61,7 +95,7 @@
         }
         .reveal-on-scroll { opacity: 1; }
         .reveal-on-scroll.active { animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
+
         .glass-dark {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
@@ -81,7 +115,7 @@
             transform: translateY(-8px);
         }
         .verified-badge { color: #1d9bf0; filter: drop-shadow(0 0 2px rgba(29, 155, 240, 0.5)); }
-        
+
         #recent-sale {
             position: fixed;
             bottom: 24px;
@@ -100,9 +134,128 @@
         .cta-glow:hover {
             box-shadow: 0 0 20px rgba(100, 145, 255, 0.4);
         }
+
+        /* Dark Mode Global Styles */
+        .dark { color-scheme: dark; }
+        .dark body,
+        .dark .bg-\[\#F8FAFC\] {
+            background: #0f172a !important;
+            color: #f1f5f9;
+        }
+        .dark .bg-white {
+            background: #1e293b !important;
+        }
+        .dark .bg-slate-50 {
+            background: #334155 !important;
+        }
+        .dark .bg-white\/50,
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.8) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .dark .text-slate-900 {
+            color: #f1f5f9 !important;
+        }
+        .dark .text-slate-800 {
+            color: #e2e8f0 !important;
+        }
+        .dark .text-slate-700 {
+            color: #cbd5e1 !important;
+        }
+        .dark .text-slate-600 {
+            color: #94a3b8 !important;
+        }
+        .dark .text-slate-500 {
+            color: #64748b !important;
+        }
+        .dark .text-slate-400 {
+            color: #475569 !important;
+        }
+        .dark .border-slate-100 {
+            border-color: #334155 !important;
+        }
+        .dark .border-slate-200 {
+            border-color: #475569 !important;
+        }
+        .dark .card-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4) !important;
+        }
+        .dark nav.glass {
+            background: rgba(15, 23, 42, 0.95) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .dark .bg-slate-900 {
+            background: #0f172a !important;
+        }
+        .dark section[id*="instagram"],
+        .dark section[id*="testimonials"],
+        .dark section[id*="faq"] {
+            background: #0f172a !important;
+        }
+        .dark details.bg-white {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        .dark details.bg-white summary {
+            color: #f1f5f9 !important;
+        }
+        .dark details.bg-white p {
+            color: #94a3b8 !important;
+        }
+        .dark footer.bg-slate-900 {
+            background: #020617 !important;
+        }
+        .dark #trusted-by-section {
+            background: rgba(15, 23, 42, 0.5) !important;
+            border-color: #334155 !important;
+        }
+        .dark .buy-modal-content {
+            background: #1e293b !important;
+        }
+        .dark #modal-product {
+            color: #f1f5f9 !important;
+        }
+        .dark #modal-input {
+            background: #334155 !important;
+            border-color: #475569 !important;
+            color: #f1f5f9 !important;
+        }
+        .dark #modal-input::placeholder {
+            color: #64748b !important;
+        }
+
+        .buy-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .buy-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .buy-modal-content {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 420px;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+        }
+        .buy-modal.active .buy-modal-content {
+            transform: scale(1) translateY(0);
+        }
     </style>
 </head>
-<body class="bg-[#F8FAFC] text-slate-900 overflow-x-hidden">
+<body class="bg-[#F8FAFC] dark:bg-dark-900 text-slate-900 dark:text-slate-100 overflow-x-hidden transition-colors duration-300">
 
     <!-- Notificação de Venda Recente -->
     <div id="recent-sale" class="glass shadow-2xl rounded-2xl p-4 border-l-4 border-primary-500 flex items-center space-x-4 max-w-sm">
@@ -137,11 +290,34 @@
                 <a href="#faq" class="hover:text-primary-600 transition-colors">Support</a>
             </div>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                    <i id="sun-icon" class="fas fa-sun text-yellow-500 hidden dark:block"></i>
+                    <i id="moon-icon" class="fas fa-moon text-slate-600 block dark:hidden"></i>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl hover:bg-slate-100 transition">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
                 <a href="https://wa.me/258834592663" id="nav-cta" class="bg-primary-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primary-700 transition shadow-lg shadow-primary-200 active:scale-95 cta-glow">
                     GET STARTED
                 </a>
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl rounded-2xl p-6 border border-slate-100">
+            <div class="flex flex-col space-y-4 text-sm font-semibold">
+                <a href="#instagram" class="py-2 hover:text-primary-600 transition-colors">Instagram</a>
+                <a href="#tiktok" class="py-2 hover:text-primary-600 transition-colors">TikTok</a>
+                <a href="#youtube" class="py-2 hover:text-primary-600 transition-colors">YouTube</a>
+                <a href="#testimonials" class="py-2 hover:text-primary-600 transition-colors">Testimonials</a>
+                <a href="#faq" class="py-2 hover:text-primary-600 transition-colors">Support</a>
+                <a href="https://wa.me/258834592663" class="bg-primary-600 text-white px-5 py-3 rounded-xl font-bold text-center hover:bg-primary-700 transition">
+                    GET STARTED
+                </a>
+            </div>
+        </div>
+    </nav>
         </div>
     </nav>
 
@@ -149,12 +325,12 @@
     <header class="relative pt-40 pb-24 overflow-hidden">
         <!-- Abstract Background -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
-            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-200 rounded-full filter blur-[120px] animate-pulse-slow"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-200 dark:bg-primary-600 rounded-full filter blur-[120px] animate-pulse-slow"></div>
             <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent rounded-full filter blur-[120px] opacity-30 animate-pulse-slow"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-6 text-center relative reveal-on-scroll">
-            <div class="inline-flex items-center space-x-2 bg-white/50 border border-white px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest text-primary-700 mb-8 uppercase backdrop-blur-sm">
+            <div class="inline-flex items-center space-x-2 bg-white/50 dark:bg-dark-800/50 border border-white/50 dark:border-white/10 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest text-primary-700 dark:text-primary-300 mb-8 uppercase backdrop-blur-sm">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
@@ -207,22 +383,121 @@
                     <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">24/7 VIP Support</p>
                 </div>
             </div>
+
+            <!-- Trust Badges -->
+            <div class="mt-12 flex flex-wrap justify-center items-center gap-6">
+                <div class="flex items-center space-x-2 text-xs font-semibold text-slate-500">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <span>4.9/5 from 15k+ reviews</span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold text-slate-500">
+                    <i class="fas fa-shield-alt text-green-500"></i>
+                    <span>SSL Secured</span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold text-slate-500">
+                    <i class="fas fa-undo text-primary-500"></i>
+                    <span>90-Day Refill Guarantee</span>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- Trusted By -->
-    <div class="py-10 bg-white/50 backdrop-blur-sm border-y border-slate-100 overflow-hidden reveal-on-scroll">
-        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
-            <i class="fab fa-cc-paypal text-4xl"></i>
-            <i class="fab fa-cc-visa text-4xl"></i>
-            <i class="fab fa-cc-mastercard text-4xl"></i>
-            <i class="fab fa-cc-stripe text-4xl"></i>
-            <i class="fab fa-cc-apple-pay text-4xl"></i>
+    <div class="py-8 bg-white/50 backdrop-blur-sm border-y border-slate-100 overflow-hidden reveal-on-scroll">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Trusted by 15,000+ creators worldwide</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 opacity-40">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-2xl text-green-500"></i>
+                    <span class="text-sm font-bold text-slate-600">Secure Payments</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-lock text-2xl text-primary-500"></i>
+                    <span class="text-sm font-bold text-slate-600">SSL Encrypted</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-undo text-2xl text-orange-500"></i>
+                    <span class="text-sm font-bold text-slate-600">90-Day Guarantee</span>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 max-w-7xl mx-auto px-6 reveal-on-scroll dark:bg-dark-900">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Loved by <span class="text-gradient">15,000+</span> Creators</h2>
+            <p class="text-slate-500 text-lg">Real results from real people who trusted us with their growth.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100">
+                <div class="flex items-center space-x-1 mb-4">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">"Went from 2k to 15k followers in 3 weeks! The quality is insane - almost all are still active after 60 days. Best investment for my brand."</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                        <span class="font-bold text-primary-700">MK</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800">Maria K.</p>
+                        <p class="text-xs text-slate-500">Beauty Influencer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100">
+                <div class="flex items-center space-x-1 mb-4">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">"Hit 1k subscribers and got monetized in 2 months thanks to the watch hours package. Support is super responsive on WhatsApp!"</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                        <span class="font-bold text-red-700">JT</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800">João T.</p>
+                        <p class="text-xs text-slate-500">YouTube Creator</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100">
+                <div class="flex items-center space-x-1 mb-4">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">"My TikTok went viral after getting 50k views from them. The algorithm boost was real! Ordering more for my other accounts."</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-black/10 rounded-full flex items-center justify-center">
+                        <span class="font-bold text-black">AL</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800">Ana L.</p>
+                        <p class="text-xs text-slate-500">TikTok Star</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Instagram Section -->
-    <section id="instagram" class="py-24 max-w-7xl mx-auto px-6 reveal-on-scroll">
+    <section id="instagram" class="py-24 max-w-7xl mx-auto px-6 reveal-on-scroll dark:bg-dark-900">
         <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
             <div class="max-w-2xl">
                 <div class="inline-block p-3 bg-white rounded-2xl shadow-xl mb-6 transition-transform hover:rotate-6">
@@ -252,14 +527,9 @@
                     <span class="text-2xl font-bold text-slate-400">$</span>
                     <span class="text-5xl font-black text-slate-900 tracking-tighter">2.39</span>
                 </div>
-                
-                <div class="mb-8 space-y-4">
-                    <input type="text" placeholder="@your_username" class="w-full bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all input-focus" onkeyup="updateBuyLink(this, 'IG 500 Followers', 2.39)">
-                    <p class="text-[10px] text-slate-400 text-center font-medium uppercase tracking-wider">No password required</p>
-                </div>
 
-                <button onclick="handleBuy(this)" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
-                    <span>SECURE CHECKOUT</span>
+                <button onclick="openBuyModal('IG 500 Followers', 2.39, 'users', 'primary')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
+                    <span>COMPRAR</span>
                     <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
                 </button>
             </div>
@@ -280,15 +550,10 @@
                     <span class="text-5xl font-black text-white tracking-tighter">4.99</span>
                 </div>
 
-                <div class="mb-8 space-y-4">
-                    <input type="text" placeholder="@your_username" class="w-full bg-white/10 border border-white/20 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all focus:bg-white/20 placeholder:text-primary-200">
-                    <p class="text-[10px] text-primary-200 text-center font-medium uppercase tracking-wider">Direct Checkout via PayPal</p>
-                </div>
-
-                <a href="https://www.paypal.com/invoice/p/#PBYU38WGXLCBC9JG" target="_blank" class="w-full bg-white text-primary-600 py-4 rounded-2xl font-black hover:bg-primary-50 transition shadow-xl shadow-primary-800 flex items-center justify-center space-x-2 group-active:scale-95">
-                    <span>BUY WITH PAYPAL</span>
+                <button onclick="openBuyModal('IG 1000 Followers', 4.99, 'crown', 'white')" class="w-full bg-white text-primary-600 py-4 rounded-2xl font-black hover:bg-primary-50 transition shadow-xl shadow-primary-800 flex items-center justify-center space-x-2 group-active:scale-95">
+                    <span>COMPRAR</span>
                     <i class="fas fa-arrow-right text-xs"></i>
-                </a>
+                </button>
             </div>
 
             <!-- Card 3 -->
@@ -306,13 +571,74 @@
                     <span class="text-5xl font-black text-slate-900 tracking-tighter">2.80</span>
                 </div>
 
-                <div class="mb-8 space-y-4">
-                    <input type="text" placeholder="Post Link" class="w-full bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl text-sm font-medium outline-none transition-all input-focus" onkeyup="updateBuyLink(this, 'IG 1000 Likes', 2.80)">
-                    <p class="text-[10px] text-slate-400 text-center font-medium uppercase tracking-wider">Supports Reels & Posts</p>
+                <button onclick="openBuyModal('IG 1000 Likes', 2.80, 'heart', 'pink')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-pink-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-pink-600 group-active:scale-95">
+                    <span>COMPRAR</span>
+                    <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- More Packages -->
+        <div class="mt-16 grid md:grid-cols-3 gap-8">
+            <!-- Mega Pack -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100 transition-all duration-300 group">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-gradient-to-br from-primary-50 to-primary-100 w-12 h-12 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-rocket text-primary-600"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-primary-600">Most Popular</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Mega Pack</h3>
+                <p class="text-primary-600 font-extrabold mb-6 text-sm">5,000 FOLLOWERS</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-slate-400">$</span>
+                    <span class="text-5xl font-black text-slate-900 tracking-tighter">19.99</span>
                 </div>
 
-                <button onclick="handleBuy(this)" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-pink-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-pink-600 group-active:scale-95">
-                    <span>SECURE CHECKOUT</span>
+                <button onclick="openBuyModal('IG 5000 Followers + 500 Bonus Likes', 19.99, 'rocket', 'primary')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
+                    <span>COMPRAR</span>
+                    <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+
+            <!-- Premium Pack -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100 transition-all duration-300 group">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-slate-50 w-12 h-12 rounded-2xl flex items-center justify-center group-hover:bg-purple-50 transition-colors">
+                        <i class="fas fa-gem text-slate-400 group-hover:text-purple-500"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Premium</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Premium Pack</h3>
+                <p class="text-purple-600 font-extrabold mb-6 text-sm">10,000 FOLLOWERS</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-slate-400">$</span>
+                    <span class="text-5xl font-black text-slate-900 tracking-tighter">34.99</span>
+                </div>
+
+                <button onclick="openBuyModal('IG 10000 Followers + 1000 Bonus Likes', 34.99, 'gem', 'purple')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-purple-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-purple-600 group-active:scale-95">
+                    <span>COMPRAR</span>
+                    <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+
+            <!-- Views Pack -->
+            <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-slate-100 transition-all duration-300 group">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="bg-slate-50 w-12 h-12 rounded-2xl flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                        <i class="fas fa-eye text-slate-400 group-hover:text-orange-500"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Viral</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-1">Video Views</h3>
+                <p class="text-orange-600 font-extrabold mb-6 text-sm">10,000 VIEWS</p>
+                <div class="flex items-baseline mb-8">
+                    <span class="text-2xl font-bold text-slate-400">$</span>
+                    <span class="text-5xl font-black text-slate-900 tracking-tighter">3.99</span>
+                </div>
+
+                <button onclick="openBuyModal('IG 10000 Views (Reels/Posts)', 3.99, 'eye', 'orange')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-orange-600 group-active:scale-95">
+                    <span>COMPRAR</span>
                     <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
                 </button>
             </div>
@@ -348,10 +674,9 @@
                                 <p class="text-white font-bold text-lg">1,000 TikTok Followers</p>
                                 <p class="text-slate-400 text-xs">High Retention Profiles</p>
                             </div>
-                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
                                 <span class="text-2xl font-black text-white tracking-tighter">$4.79</span>
-                                <input type="text" placeholder="@user" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-primary-400">
-                                <a href="https://www.paypal.com/invoice/p/#PBYU38WGXLCBC9JG" target="_blank" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</a>
+                                <button onclick="openBuyModal('TikTok 1000 Followers', 4.79, 'fire', 'primary')" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</button>
                             </div>
                         </div>
 
@@ -360,10 +685,31 @@
                                 <p class="text-white font-bold text-lg">5,000 Instant Views</p>
                                 <p class="text-slate-400 text-xs">Safe & Natural Growth</p>
                             </div>
-                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
                                 <span class="text-2xl font-black text-white tracking-tighter">$1.59</span>
-                                <input type="text" placeholder="Link" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-primary-400">
-                                <a href="#" onclick="updateOtherLink(this, 'TikTok 5000 Views', 1.59)" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">BUY</a>
+                                <button onclick="openBuyModal('TikTok 5000 Views', 1.59, 'play', 'primary')" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</button>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">10,000 TikTok Followers</p>
+                                <p class="text-slate-400 text-xs">Premium Quality + Bonus</p>
+                            </div>
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-white tracking-tighter">$39.99</span>
+                                <button onclick="openBuyModal('TikTok 10000 Followers', 39.99, 'fire', 'primary')" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</button>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">50,000 TikTok Views</p>
+                                <p class="text-slate-400 text-xs">Viral Boost Package</p>
+                            </div>
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-white tracking-tighter">$7.99</span>
+                                <button onclick="openBuyModal('TikTok 50000 Views', 7.99, 'rocket', 'primary')" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-xs hover:bg-primary-50 transition active:scale-95">COMPRAR</button>
                             </div>
                         </div>
                     </div>
@@ -387,10 +733,20 @@
                                 <p class="text-white font-bold text-lg">500 Subscribers</p>
                                 <p class="text-slate-400 text-xs">Non-Drop Guarantee</p>
                             </div>
-                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
                                 <span class="text-2xl font-black text-red-500 tracking-tighter">$12.00</span>
-                                <input type="text" placeholder="Channel" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-red-400">
-                                <a href="#" onclick="updateOtherLink(this, 'YouTube 500 Subscribers', 12.00)" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">BUY</a>
+                                <button onclick="openBuyModal('YouTube 500 Subscribers', 12.00, 'youtube', 'red')" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">COMPRAR</button>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">1,000 Subscribers</p>
+                                <p class="text-slate-400 text-xs">Instant Start + Refill</p>
+                            </div>
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-red-500 tracking-tighter">$22.00</span>
+                                <button onclick="openBuyModal('YouTube 1000 Subscribers', 22.00, 'youtube', 'red')" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">COMPRAR</button>
                             </div>
                         </div>
 
@@ -399,10 +755,20 @@
                                 <p class="text-white font-bold text-lg">4,000 Watch Hours</p>
                                 <p class="text-slate-400 text-xs">Fast Track Monetization</p>
                             </div>
-                            <div class="flex items-center space-x-6 w-full sm:w-auto">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
                                 <span class="text-2xl font-black text-red-500 tracking-tighter">$36.00</span>
-                                <input type="text" placeholder="Link" class="hidden sm:block bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-xs text-white outline-none w-24 focus:w-32 transition-all focus:border-red-400">
-                                <a href="#" onclick="updateOtherLink(this, 'YouTube 4000 Watch Hours', 36.00)" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">BUY</a>
+                                <button onclick="openBuyModal('YouTube 4000 Watch Hours', 36.00, 'clock', 'red')" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">COMPRAR</button>
+                            </div>
+                        </div>
+
+                        <div class="group relative flex flex-col sm:flex-row items-center gap-4 bg-white/5 p-6 rounded-[2rem] border border-white/10 hover:border-white/30 transition-all">
+                            <div class="flex-1">
+                                <p class="text-white font-bold text-lg">10,000 YouTube Views</p>
+                                <p class="text-slate-400 text-xs">High Retention Views</p>
+                            </div>
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
+                                <span class="text-2xl font-black text-red-500 tracking-tighter">$9.99</span>
+                                <button onclick="openBuyModal('YouTube 10000 Views', 9.99, 'eye', 'red')" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-700 transition active:scale-95">COMPRAR</button>
                             </div>
                         </div>
                     </div>
@@ -412,7 +778,7 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-24 max-w-4xl mx-auto px-6 reveal-on-scroll">
+    <section id="faq" class="py-24 max-w-4xl mx-auto px-6 reveal-on-scroll dark:bg-dark-900">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-extrabold mb-4">Questions? We Have <span class="text-primary-600">Answers.</span></h2>
             <p class="text-slate-500">Everything you need to know about our elite services.</p>
@@ -457,6 +823,32 @@
                     If any followers drop below your purchased amount within the first 90 days, our system automatically detects it and refills them at no extra cost to you.
                 </div>
             </details>
+
+            <details class="group bg-white rounded-3xl border border-slate-100 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
+                <summary class="flex items-center justify-between">
+                    <h4 class="text-lg font-bold text-slate-800">Do I need to provide my password?</h4>
+                    <span class="relative flex h-5 w-5 shrink-0">
+                        <i class="fas fa-plus absolute inset-0 opacity-100 group-open:opacity-0 transition-opacity"></i>
+                        <i class="fas fa-minus absolute inset-0 opacity-0 group-open:opacity-100 transition-opacity"></i>
+                    </span>
+                </summary>
+                <div class="mt-4 text-slate-500 leading-relaxed text-sm">
+                    Never! We only need your username or profile link. No password is required for any of our services. Your account security is our priority.
+                </div>
+            </details>
+
+            <details class="group bg-white rounded-3xl border border-slate-100 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
+                <summary class="flex items-center justify-between">
+                    <h4 class="text-lg font-bold text-slate-800">How do I track my order?</h4>
+                    <span class="relative flex h-5 w-5 shrink-0">
+                        <i class="fas fa-plus absolute inset-0 opacity-100 group-open:opacity-0 transition-opacity"></i>
+                        <i class="fas fa-minus absolute inset-0 opacity-0 group-open:opacity-100 transition-opacity"></i>
+                    </span>
+                </summary>
+                <div class="mt-4 text-slate-500 leading-relaxed text-sm">
+                    After purchase, you'll receive a WhatsApp message with your order details and estimated delivery time. You can also message us anytime to check your order status.
+                </div>
+            </details>
         </div>
     </section>
 
@@ -494,11 +886,12 @@
                         <li><a href="javascript:void(0)" onclick="showPolicy('privacy')" class="hover:text-white transition">Privacy Policy</a></li>
                         <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white transition">Refund Policy</a></li>
                         <li><a href="https://wa.me/258834592663" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="track.html" class="hover:text-white transition">Track Order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-slate-500 text-xs">© 2024 SocialGrow Global. All rights reserved. Not affiliated with Instagram, TikTok or YouTube.</p>
+                <p class="text-slate-500 text-xs">© 2026 SocialGrow Global. All rights reserved. Not affiliated with Instagram, TikTok or YouTube.</p>
                 <div class="flex items-center space-x-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                     <i class="fas fa-lock-alt text-green-500"></i>
                     <span>SSL SECURED CHECKOUT</span>
@@ -525,22 +918,220 @@
         <span class="absolute right-20 bg-white text-slate-900 px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Chat with Support</span>
     </a>
 
+    <!-- Buy Modal -->
+    <div id="buy-modal" class="buy-modal">
+        <div class="buy-modal-content">
+            <button onclick="closeBuyModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition">
+                <i class="fas fa-times text-slate-600"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div id="modal-icon" class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shopping-bag text-primary-600 text-2xl"></i>
+                </div>
+                <h3 id="modal-product" class="text-2xl font-bold text-slate-900">Product Name</h3>
+                <p id="modal-price" class="text-primary-600 font-extrabold text-xl mt-1">$0.00</p>
+                <p class="text-xs text-green-600 font-semibold mt-1">20% OFF applied!</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Your Username / Link</label>
+                    <input type="text" id="modal-input" placeholder="@username or post link" class="w-full bg-slate-50 dark:bg-slate-700 border-2 border-slate-200 dark:border-slate-600 px-5 py-4 rounded-2xl text-sm font-medium outline-none transition-all focus:border-primary-500 focus:shadow-lg dark:text-white dark:placeholder:text-slate-400">
+                </div>
+                <p class="text-xs text-slate-400 dark:text-slate-500 text-center">No password required. We only need your username.</p>
+
+                <!-- Coupon Code -->
+                <div class="mt-4">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Discount Code (optional)</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="coupon-input" placeholder="Enter coupon" class="flex-1 bg-slate-50 dark:bg-slate-700 border-2 border-slate-200 dark:border-slate-600 px-4 py-3 rounded-xl text-sm font-medium outline-none focus:border-primary-500 dark:text-white dark:placeholder:text-slate-400">
+                        <button type="button" onclick="applyCoupon()" class="px-4 py-3 bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 rounded-xl font-bold text-sm hover:bg-primary-200 dark:hover:bg-primary-700 transition">Apply</button>
+                    </div>
+                    <p id="coupon-message" class="text-xs mt-2 hidden"></p>
+                </div>
+            </div>
+
+            <div id="discount-display" class="hidden mt-4 p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
+                <p class="text-sm font-bold text-green-600 dark:text-green-400 text-center">
+                    <i class="fas fa-tag mr-1"></i>
+                    <span id="discount-text">Discount applied!</span>
+                </p>
+            </div>
+
+            <button id="modal-pay-btn" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-bold text-lg mt-6 hover:bg-primary-600 transition shadow-xl flex items-center justify-center space-x-2">
+                <i class="fab fa-whatsapp"></i>
+                <span>PAGAR VIA WHATSAPP</span>
+            </button>
+        </div>
+    </div>
+
     <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check saved preference
+        if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('darkMode', html.classList.contains('dark'));
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
         // WhatsApp Integration Configuration
-        const WHATSAPP_NUMBER = "258834592663"; // Substitua pelo seu número
-        
-        function updateBuyLink(input, product, price) {
-            const username = input.value.trim();
-            const btn = input.closest('div').nextElementSibling;
-            
-            if (username) {
-                const message = `Hello! I'd like to buy ${product} ($${price}). My username/link is: ${username}`;
-                const encodedMessage = encodeURIComponent(message);
-                btn.setAttribute('data-link', `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`);
+        const WHATSAPP_NUMBER = "258834592663";
+        let currentProduct = { name: '', price: 0 };
+        let appliedCoupon = null;
+        const validCoupons = {
+            'FLASH20': 0.20,
+            'SOCIAL10': 0.10,
+            'WELCOME15': 0.15,
+            'GROW2026': 0.25
+        };
+
+        // Coupon System
+        function applyCoupon() {
+            const input = document.getElementById('coupon-input');
+            const message = document.getElementById('coupon-message');
+            const discountDisplay = document.getElementById('discount-display');
+            const code = input.value.trim().toUpperCase();
+
+            if (validCoupons[code]) {
+                appliedCoupon = { code: code, discount: validCoupons[code] };
+                message.textContent = `Coupon applied! ${validCoupons[code] * 100}% OFF`;
+                message.className = 'text-xs mt-2 text-green-600 font-bold';
+                message.classList.remove('hidden');
+                discountDisplay.classList.remove('hidden');
+                document.getElementById('discount-text').textContent = `${validCoupons[code] * 100}% OFF Applied!`;
+                updateModalPrice();
             } else {
-                btn.removeAttribute('data-link');
+                message.textContent = 'Invalid coupon code';
+                message.className = 'text-xs mt-2 text-red-500 font-bold';
+                message.classList.remove('hidden');
+                discountDisplay.classList.add('hidden');
+                appliedCoupon = null;
+                updateModalPrice();
             }
         }
+
+        function updateModalPrice() {
+            const priceEl = document.getElementById('modal-price');
+            let finalPrice = currentProduct.price;
+
+            if (appliedCoupon) {
+                finalPrice = currentProduct.price * (1 - appliedCoupon.discount);
+                priceEl.innerHTML = `$${finalPrice.toFixed(2)} <span class="text-sm font-normal text-slate-400 line-through">$${currentProduct.price.toFixed(2)}</span> <span class="text-xs text-green-600 font-bold ml-1">(-${appliedCoupon.discount * 100}%)</span>`;
+            } else {
+                const discountedPrice = (currentProduct.price * 0.8).toFixed(2);
+                priceEl.innerHTML = `$${discountedPrice} <span class="text-sm font-normal text-slate-400 line-through">$${currentProduct.price.toFixed(2)}</span>`;
+            }
+        }
+
+        // Buy Modal Functions
+        function openBuyModal(product, price, icon, color) {
+            currentProduct = { name: product, price: price };
+
+            const modal = document.getElementById('buy-modal');
+            const iconEl = document.getElementById('modal-icon');
+            const priceEl = document.getElementById('modal-price');
+
+            // Update icon and colors based on product type
+            iconEl.className = `w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4`;
+            if (color === 'white') {
+                iconEl.classList.add('bg-white/20');
+                iconEl.innerHTML = `<i class="fas fa-${icon} text-white text-2xl"></i>`;
+            } else {
+                const colorMap = {
+                    primary: { bg: 'bg-primary-100', text: 'text-primary-600' },
+                    pink: { bg: 'bg-pink-100', text: 'text-pink-600' },
+                    purple: { bg: 'bg-purple-100', text: 'text-purple-600' },
+                    orange: { bg: 'bg-orange-100', text: 'text-orange-600' }
+                };
+                const c = colorMap[color] || colorMap.primary;
+                iconEl.classList.add(c.bg);
+                iconEl.innerHTML = `<i class="fas fa-${icon} ${c.text} text-2xl"></i>`;
+            }
+
+            document.getElementById('modal-product').textContent = product;
+
+            const discountedPrice = (price * 0.8).toFixed(2);
+            priceEl.innerHTML = `$${discountedPrice} <span class="text-sm font-normal text-slate-400 line-through">$${price.toFixed(2)}</span>`;
+
+            document.getElementById('modal-input').value = '';
+            document.getElementById('modal-input').placeholder = product.includes('Likes') || product.includes('Views') || product.includes('Views') ? 'Post/Reel Link' : '@your_username';
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('modal-input').focus(), 300);
+        }
+
+        function closeBuyModal() {
+            const modal = document.getElementById('buy-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Reset coupon
+            appliedCoupon = null;
+            document.getElementById('coupon-input').value = '';
+            document.getElementById('coupon-message').classList.add('hidden');
+            document.getElementById('discount-display').classList.add('hidden');
+        }
+
+        function processPayment() {
+            const input = document.getElementById('modal-input').value.trim();
+            if (!input) {
+                document.getElementById('modal-input').classList.add('border-red-400', 'bg-red-50');
+                document.getElementById('modal-input').focus();
+                setTimeout(() => {
+                    document.getElementById('modal-input').classList.remove('border-red-400', 'bg-red-50');
+                }, 2000);
+                return;
+            }
+
+            let finalPrice, discountInfo;
+            if (appliedCoupon) {
+                finalPrice = (currentProduct.price * (1 - appliedCoupon.discount)).toFixed(2);
+                discountInfo = `${appliedCoupon.code} (${appliedCoupon.discount * 100}% OFF)`;
+            } else {
+                finalPrice = (currentProduct.price * 0.8).toFixed(2);
+                discountInfo = "FLASH20 (20% OFF)";
+            }
+
+            const message = `Hello! I'd like to buy ${currentProduct.name}. Price: $${finalPrice} (with ${discountInfo}). Link: ${input}`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+            closeBuyModal();
+            appliedCoupon = null;
+        }
+
+        // Close modal on background click
+        document.getElementById('buy-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeBuyModal();
+        });
+
+        // Enter key to submit
+        document.getElementById('modal-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') processPayment();
+        });
+
+        // Pay button click
+        document.getElementById('modal-pay-btn').addEventListener('click', processPayment);
 
         function updateOtherLink(btn, product, price) {
             const input = btn.previousElementSibling;
@@ -550,22 +1141,10 @@
                 input.focus();
                 return;
             }
-            const message = `Hello! I'd like to buy ${product} ($${price}). Link: ${val}`;
+            const discountCode = "FLASH20";
+            const discountedPrice = (price * 0.8).toFixed(2);
+            const message = `Hello! I'd like to buy ${product}. Price: $${discountedPrice} (with ${discountCode} discount - 20% OFF). Link: ${val}`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-        }
-
-        function handleBuy(btn) {
-            const link = btn.getAttribute('data-link');
-            if (link) {
-                window.open(link, '_blank');
-            } else {
-                const input = btn.previousElementSibling.querySelector('input');
-                input.classList.add('border-red-400', 'bg-red-50');
-                input.focus();
-                setTimeout(() => {
-                    input.classList.remove('border-red-400', 'bg-red-50');
-                }, 2000);
-            }
         }
 
         // Persistent Timer Logic
