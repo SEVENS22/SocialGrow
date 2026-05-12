@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server/server.js"
+    },
+    {
+      "src": "/success.html",
+      "dest": "server/success.html"
+    },
+    {
+      "src": "/cancel.html",
+      "dest": "server/cancel.html"
+    },
+    {
+      "src": "/track.html",
+      "dest": "track.html"
+    }
+  ]
+}
