@@ -961,7 +961,7 @@
 
             <button id="modal-pay-btn" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-bold text-lg mt-6 hover:bg-primary-600 transition shadow-xl flex items-center justify-center space-x-2">
                 <i class="fab fa-whatsapp"></i>
-                <span>PAGAR VIA WHATSAPP</span>
+                <span>PAGAR COM PAYPAL</span>
             </button>
         </div>
     </div>
@@ -1105,19 +1105,50 @@
                 return;
             }
 
-            let finalPrice, discountInfo;
+            // Show loading
+            const payBtn = document.getElementById('modal-pay-btn');
+            const originalText = payBtn.innerHTML;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+            payBtn.disabled = true;
+
+            let finalPrice = currentProduct.price;
+            let couponCode = '';
+
             if (appliedCoupon) {
-                finalPrice = (currentProduct.price * (1 - appliedCoupon.discount)).toFixed(2);
-                discountInfo = `${appliedCoupon.code} (${appliedCoupon.discount * 100}% OFF)`;
+                finalPrice = currentProduct.price * (1 - appliedCoupon.discount);
+                couponCode = appliedCoupon.code;
             } else {
-                finalPrice = (currentProduct.price * 0.8).toFixed(2);
-                discountInfo = "FLASH20 (20% OFF)";
+                finalPrice = currentProduct.price * 0.8; // Default 20% discount
             }
 
-            const message = `Hello! I'd like to buy ${currentProduct.name}. Price: $${finalPrice} (with ${discountInfo}). Link: ${input}`;
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-            closeBuyModal();
-            appliedCoupon = null;
+            // Create PayPal order
+            fetch('https://socialgrow-api.vercel.app/api/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    product: currentProduct.name,
+                    price: parseFloat(finalPrice.toFixed(2)),
+                    username: input,
+                    coupon: couponCode
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.approvalUrl) {
+                    // Redirect to PayPal
+                    window.location.href = data.approvalUrl;
+                } else {
+                    alert('Erro ao criar pagamento. Tente novamente ou contacte o suporte.');
+                    payBtn.innerHTML = originalText;
+                    payBtn.disabled = false;
+                }
+            })
+            .catch(err => {
+                console.error('Payment Error:', err);
+                alert('Erro de conexão. Por favor tente novamente.');
+                payBtn.innerHTML = originalText;
+                payBtn.disabled = false;
+            });
         }
 
         // Close modal on background click
