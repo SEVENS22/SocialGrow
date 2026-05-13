@@ -4,12 +4,36 @@
     {
       "src": "server/server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "track.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "server/success.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "server/cancel.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "server/server.js"
+    },
+    {
+      "src": "/",
+      "dest": "index.html"
+    },
+    {
+      "src": "/index.html",
+      "dest": "index.html"
     },
     {
       "src": "/success.html",
