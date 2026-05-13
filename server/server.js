@@ -25,10 +25,10 @@ const configs = {
 
 const config = configs[PAYPAL_MODE];
 
-if (!config.clientId || !config.clientSecret) {
-    console.error('❌ PayPal credentials not configured!');
-    console.log('📝 Copie .env.example para .env e preencha as credenciais');
-    process.exit(1);
+const paypalConfigured = !!(config.clientId && config.clientSecret);
+
+if (!paypalConfigured) {
+    console.warn('⚠️ PayPal credentials not configured - payments will show error');
 }
 
 // ============ HELPERS ============
@@ -97,6 +97,13 @@ app.post('/api/create-order', async (req, res) => {
 
         if (coupon && validCoupons[coupon.toUpperCase()]) {
             finalPrice = price * (1 - validCoupons[coupon.toUpperCase()]);
+        }
+
+        if (!paypalConfigured) {
+            return res.status(503).json({
+                error: 'PayPal not configured',
+                message: 'Contact support to enable payments'
+            });
         }
 
         const accessToken = await getAccessToken();
