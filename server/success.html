@@ -40,11 +40,14 @@
     </div>
 
     <script>
-        // Extract order ID from URL params
+        // Extract order ID from URL params (PayPal uses 'token')
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        const orderIdDisplay = document.getElementById('order-id');
 
         if (token) {
+            orderIdDisplay.textContent = "Processing payment...";
+            
             // Call capture API
             fetch('/api/capture-order', {
                 method: 'POST',
@@ -53,13 +56,20 @@
             })
             .then(res => res.json())
             .then(data => {
-                if (data.orderId) {
-                    document.getElementById('order-id').textContent = data.orderId;
+                if (data.success) {
+                    orderIdDisplay.textContent = data.orderId || token;
+                    orderIdDisplay.classList.add('text-green-600');
+                } else {
+                    orderIdDisplay.textContent = "Error capturing payment. Please contact support.";
+                    orderIdDisplay.classList.add('text-red-500');
                 }
             })
             .catch(err => {
-                console.log('Order processing...');
+                console.error('Capture error:', err);
+                orderIdDisplay.textContent = "Connection error. Your order will be processed manually.";
             });
+        } else {
+            orderIdDisplay.textContent = "No order token found.";
         }
     </script>
 </body>

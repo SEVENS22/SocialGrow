@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://socialgrow.top/sitemap.xml
+Sitemap: https://socialgrow-up.vercel.app/sitemap.xml

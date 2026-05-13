@@ -29,8 +29,8 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "SocialGrow",
-      "url": "https://socialgrow.top",
-      "logo": "https://socialgrow.top/logo.png",
+      "url": "https://socialgrow-up.vercel.app",
+      "logo": "https://socialgrow-up.vercel.app/logo.png",
       "description": "Premium social media growth agency. Get Instagram followers, TikTok views, and YouTube subscribers instantly.",
       "sameAs": [
         "https://instagram.com/socialgrow",
@@ -1123,7 +1123,7 @@
             }
 
             // Create PayPal order
-            fetch('https://socialgrow-api.vercel.app/api/create-order', {
+            fetch('/api/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

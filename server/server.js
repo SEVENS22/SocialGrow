@@ -126,8 +126,8 @@ app.post('/api/create-order', async (req, res) => {
                     brand_name: 'SocialGrow',
                     landing_page: 'NO_PREFERENCE',
                     user_action: 'PAY_NOW',
-                    return_url: `${process.env.SITE_URL || 'http://localhost:3000'}/success.html`,
-                    cancel_url: `${process.env.SITE_URL || 'http://localhost:3000'}/cancel.html`
+                    return_url: `${process.env.SITE_URL || 'http://localhost:3000'}/success`,
+                    cancel_url: `${process.env.SITE_URL || 'http://localhost:3000'}/cancel`
                 }
             },
             {
@@ -171,10 +171,11 @@ app.post('/api/create-order', async (req, res) => {
  */
 app.post('/api/capture-order', async (req, res) => {
     try {
-        const { orderId } = req.body;
-
+        // PayPal retorna o orderId como 'token' na URL de retorno
+        const orderId = req.body.orderId || req.body.token;
+        
         if (!orderId) {
-            return res.status(400).json({ error: 'Order ID is required' });
+            return res.status(400).json({ error: 'Order ID or Token is required' });
         }
 
         const accessToken = await getAccessToken();

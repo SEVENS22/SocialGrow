@@ -2,25 +2,37 @@
   "version": 2,
   "builds": [
     {
-      "src": "/api/**",
+      "src": "server/server.js",
       "use": "@vercel/node"
     },
     {
-      "src": "/**",
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/server.js"
+      "dest": "/server/server.js"
     },
     {
       "src": "/success",
       "dest": "/server/success.html"
     },
     {
+      "src": "/success.html",
+      "dest": "/server/success.html"
+    },
+    {
       "src": "/cancel",
+      "dest": "/server/cancel.html"
+    },
+    {
+      "src": "/cancel.html",
       "dest": "/server/cancel.html"
     },
     {
