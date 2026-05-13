@@ -2,50 +2,30 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/server.js",
+      "src": "/api/**",
       "use": "@vercel/node"
     },
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "track.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "server/success.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "server/cancel.html",
+      "src": "/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/server.js"
+      "dest": "/api/server.js"
     },
     {
-      "src": "/",
-      "dest": "index.html"
+      "src": "/success",
+      "dest": "/server/success.html"
     },
     {
-      "src": "/index.html",
-      "dest": "index.html"
+      "src": "/cancel",
+      "dest": "/server/cancel.html"
     },
     {
-      "src": "/success.html",
-      "dest": "server/success.html"
-    },
-    {
-      "src": "/cancel.html",
-      "dest": "server/cancel.html"
-    },
-    {
-      "src": "/track.html",
-      "dest": "track.html"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
