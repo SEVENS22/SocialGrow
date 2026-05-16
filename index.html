@@ -22,6 +22,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AXDOWjFE7Nr2eM5wKP2Z47WLBLh4WRjtUNzDpA-nfronafPCVcXpL-SvcwifLbV5jLPJJXsExlCVFuog&currency=USD"></script>
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -960,9 +963,11 @@
                 </p>
             </div>
 
+            <div id="paypal-button-container" class="mt-6 hidden"></div>
+
             <button id="modal-pay-btn" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-bold text-lg mt-6 hover:bg-primary-600 transition shadow-xl flex items-center justify-center space-x-2">
-                <i class="fab fa-whatsapp"></i>
-                <span>PAGAR COM PAYPAL</span>
+                <span>AVANÇAR PARA PAGAMENTO</span>
+                <i class="fas fa-arrow-right text-xs"></i>
             </button>
         </div>
     </div>
@@ -1106,11 +1111,11 @@
                 return;
             }
 
-            // Show loading
-            const payBtn = document.getElementById('modal-pay-btn');
-            const originalText = payBtn.innerHTML;
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-            payBtn.disabled = true;
+            // Oculta o botão de avançar e mostra o botão do PayPal
+            document.getElementById('modal-pay-btn').classList.add('hidden');
+            const paypalContainer = document.getElementById('paypal-button-container');
+            paypalContainer.classList.remove('hidden');
+            paypalContainer.innerHTML = ''; // Limpa antes de renderizar
 
             let finalPrice = currentProduct.price;
             let couponCode = '';
@@ -1122,34 +1127,45 @@
                 finalPrice = currentProduct.price * 0.8; // Default 20% discount
             }
 
-            // Create PayPal order
-            fetch('/api/create-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    product: currentProduct.name,
-                    price: parseFloat(finalPrice.toFixed(2)),
-                    username: input,
-                    coupon: couponCode
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && data.approvalUrl) {
-                    // Redirect to PayPal
-                    window.location.href = data.approvalUrl;
-                } else {
-                    alert('Erro ao criar pagamento. Tente novamente ou contacte o suporte.');
-                    payBtn.innerHTML = originalText;
-                    payBtn.disabled = false;
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return fetch('/api/create-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            product: currentProduct.name,
+                            price: parseFloat(finalPrice.toFixed(2)),
+                            username: input,
+                            coupon: couponCode
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(order => order.orderId);
+                },
+                onApprove: function(data, actions) {
+                    paypalContainer.innerHTML = '<div class="text-center p-4"><i class="fas fa-spinner fa-spin text-2xl text-primary-600"></i><p class="mt-2 font-bold">Processando seu pedido...</p></div>';
+                    
+                    return fetch('/api/capture-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId: data.orderID })
+                    })
+                    .then(res => res.json())
+                    .then(details => {
+                        if (details.status === 'completed' || details.success) {
+                            window.location.href = '/success?token=' + data.orderID;
+                        } else {
+                            alert('Erro ao processar pagamento. Por favor, tente novamente.');
+                            processPayment(); // Reinicia
+                        }
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal Error:', err);
+                    alert('Ocorreu um erro com o PayPal. Tente novamente.');
+                    processPayment();
                 }
-            })
-            .catch(err => {
-                console.error('Payment Error:', err);
-                alert('Erro de conexão. Por favor tente novamente.');
-                payBtn.innerHTML = originalText;
-                payBtn.disabled = false;
-            });
+            }).render('#paypal-button-container');
         }
 
         // Close modal on background click

@@ -33,6 +33,25 @@ if (!paypalConfigured) {
 
 // ============ HELPERS ============
 
+// Enviar notificação para o Telegram
+async function sendTelegramNotification(message) {
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    
+    if (!token || !chatId) return;
+
+    try {
+        await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown'
+        });
+        console.log('✅ Telegram notification sent');
+    } catch (error) {
+        console.error('❌ Telegram error:', error.response?.data || error.message);
+    }
+}
+
 // Get Access Token do PayPal
 async function getAccessToken() {
     const auth = Buffer.from(`${config.clientId}:${config.clientSecret}`).toString('base64');
@@ -68,13 +87,6 @@ app.get('/api/health', (req, res) => {
 /**
  * POST /api/create-order
  * Cria uma ordem de pagamento no PayPal
- *
- * Body esperado:
- * {
- *   "product": "1,000 Instagram Followers",
- *   "price": 4.99,
- *   "username": "@user123"
- * }
  */
 app.post('/api/create-order', async (req, res) => {
     try {
@@ -120,7 +132,8 @@ app.post('/api/create-order', async (req, res) => {
                     amount: {
                         currency_code: 'USD',
                         value: finalPrice.toFixed(2)
-                    }
+                    },
+                    custom_id: JSON.stringify({ product, username, price: finalPrice.toFixed(2) })
                 }],
                 application_context: {
                     brand_name: 'SocialGrow',
@@ -138,17 +151,11 @@ app.post('/api/create-order', async (req, res) => {
             }
         );
 
-        // Retorna o link de aprovação
-        const approvalUrl = orderResponse.data.links.find(link => link.rel === 'approve');
-
         res.json({
             success: true,
             orderId: orderResponse.data.id,
-            approvalUrl: approvalUrl.href,
-            price: finalPrice.toFixed(2),
-            originalPrice: price.toFixed(2),
-            product,
-            username
+            approvalUrl: orderResponse.data.links.find(link => link.rel === 'approve')?.href,
+            price: finalPrice.toFixed(2)
         });
 
     } catch (error) {
@@ -163,15 +170,9 @@ app.post('/api/create-order', async (req, res) => {
 /**
  * POST /api/capture-order
  * Confirma/captura um pagamento após aprovação
- *
- * Body esperado:
- * {
- *   "orderId": "PAYID-xxx"
- * }
  */
 app.post('/api/capture-order', async (req, res) => {
     try {
-        // PayPal retorna o orderId como 'token' na URL de retorno
         const orderId = req.body.orderId || req.body.token;
         
         if (!orderId) {
@@ -192,64 +193,73 @@ app.post('/api/capture-order', async (req, res) => {
         );
 
         const capture = captureResponse.data;
-        const status = capture.status;
+        
+        if (capture.status === 'COMPLETED') {
+            const unit = capture.purchase_units[0];
+            const meta = JSON.parse(unit.payments.captures[0].custom_id || '{}');
 
-        if (status === 'COMPLETED') {
+            // Notificar Telegram
+            const message = `💰 *NOVO PAGAMENTO RECEBIDO!*\n\n` +
+                          `👤 *Usuário:* ${meta.username || 'Não informado'}\n` +
+                          `📦 *Produto:* ${meta.product || 'Serviço'}\n` +
+                          `💵 *Valor:* $${meta.price || '0.00'}\n` +
+                          `🆔 *ID:* ${capture.id}\n\n` +
+                          `🚀 Já pode adicionar os seguidores!`;
+
+            await sendTelegramNotification(message);
+
             res.json({
                 success: true,
                 status: 'completed',
-                orderId: capture.id,
-                paymentId: capture.purchase_units[0].payments.captures[0].id,
-                amount: capture.purchase_units[0].payments.captures[0].amount.value,
-                email: capture.payer?.email_address
-            });
-        } else {
-            res.json({
-                success: true,
-                status: status,
                 orderId: capture.id
             });
+        } else {
+            res.json({ success: true, status: capture.status });
         }
 
     } catch (error) {
+        // Se já foi capturado anteriormente, retorna sucesso
+        if (error.response?.data?.name === 'ORDER_ALREADY_CAPTURED') {
+            return res.json({ success: true, status: 'completed' });
+        }
+        
         console.error('Capture Error:', error.response?.data || error.message);
-        res.status(500).json({
-            error: 'Failed to capture order',
-            details: error.response?.data || error.message
-        });
+        res.status(500).json({ error: 'Failed to capture order' });
     }
 });
 
 /**
  * POST /api/verify-webhook
- * Verifica webhook do PayPal (para notificações de pagamento)
+ * Recebe notificações automáticas do PayPal
  */
 app.post('/api/verify-webhook', async (req, res) => {
     try {
-        const webhookEvent = req.body;
+        const event = req.body;
+        console.log('📥 Webhook received:', event.event_type);
 
-        // Aqui você pode processar o webhook
-        // Ex: enviar confirmação, atualizar banco de dados, etc.
-
-        console.log('📥 Webhook received:', webhookEvent.event_type);
-
-        // Exemplo de resposta para diferentes tipos de eventos
-        switch (webhookEvent.event_type) {
-            case 'CHECKOUT.ORDER.APPROVED':
-                console.log('✅ Order approved');
-                break;
-            case 'PAYMENT.CAPTURE.COMPLETED':
-                console.log('💰 Payment completed');
-                // Aqui você notificaria o cliente via WhatsApp
-                break;
-            default:
-                console.log('ℹ️ Other event:', webhookEvent.event_type);
+        if (event.event_type === 'CHECKOUT.ORDER.APPROVED') {
+            const orderId = event.resource.id;
+            console.log(`🚀 Automating capture for order: ${orderId}`);
+            
+            // Tenta capturar automaticamente
+            const accessToken = await getAccessToken();
+            await axios.post(
+                `${config.baseUrl}/v2/checkout/orders/${orderId}/capture`,
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            console.log(`✅ Order ${orderId} captured via Webhook`);
         }
 
         res.json({ received: true });
     } catch (error) {
-        console.error('Webhook Error:', error);
-        res.status(500).json({ error: 'Webhook processing failed' });
+        console.error('Webhook Error:', error.response?.data || error.message);
+        res.json({ received: true }); // Sempre responde 200 para o PayPal
     }
 });
 
@@ -274,34 +284,12 @@ app.get('/api/products', (req, res) => {
             { id: 'yt-1k-subs', name: '1,000 YouTube Subscribers', price: 22.00, platform: 'youtube' },
             { id: 'yt-4k-hours', name: '4,000 Watch Hours', price: 36.00, platform: 'youtube' },
             { id: 'yt-10k-views', name: '10,000 YouTube Views', price: 9.99, platform: 'youtube' }
-        ],
-        coupons: {
-            'FLASH20': 0.20,
-            'SOCIAL10': 0.10,
-            'WELCOME15': 0.15,
-            'GROW2026': 0.25
-        }
+        ]
     });
 });
 
 // ============ START SERVER ============
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   🚀 SocialGrow PayPal API Server                         ║
-║                                                           ║
-║   Mode: ${PAYPAL_MODE.toUpperCase().padEnd(42)}║
-║   Port: ${PORT.toString().padEnd(47)}║
-║                                                           ║
-║   Endpoints:                                             ║
-║   - GET  /api/health          → Health check              ║
-║   - GET  /api/products        → Lista produtos            ║
-║   - POST /api/create-order    → Criar pagamento           ║
-║   - POST /api/capture-order   → Confirmar pagamento       ║
-║   - POST /api/verify-webhook  → Webhook PayPal           ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-    `);
+    console.log(`🚀 SocialGrow Server running on port ${PORT}`);
 });
