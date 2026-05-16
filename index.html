@@ -237,6 +237,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow-y: auto;
+            padding: 20px;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -249,8 +251,11 @@
             background: white;
             border-radius: 2rem;
             padding: 2.5rem;
-            width: 90%;
-            max-width: 420px;
+            width: 95%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
             transform: scale(0.9) translateY(20px);
             transition: all 0.3s ease;
         }
@@ -1139,8 +1144,21 @@
                             coupon: couponCode
                         })
                     })
-                    .then(res => res.json())
-                    .then(order => order.orderId);
+                    .then(res => {
+                        if (!res.ok) {
+                            return res.json().then(err => { throw err; });
+                        }
+                        return res.json();
+                    })
+                    .then(order => {
+                        if (!order.orderId) throw new Error('No Order ID returned');
+                        return order.orderId;
+                    })
+                    .catch(err => {
+                        console.error('Create Order Error:', err);
+                        alert('Erro ao iniciar pagamento: ' + (err.message || 'Verifique sua conexão'));
+                        throw err;
+                    });
                 },
                 onApprove: function(data, actions) {
                     paypalContainer.innerHTML = '<div class="text-center p-4"><i class="fas fa-spinner fa-spin text-2xl text-primary-600"></i><p class="mt-2 font-bold">Processando seu pedido...</p></div>';
@@ -1155,9 +1173,13 @@
                         if (details.status === 'completed' || details.success) {
                             window.location.href = '/success?token=' + data.orderID;
                         } else {
-                            alert('Erro ao processar pagamento. Por favor, tente novamente.');
-                            processPayment(); // Reinicia
+                            throw new Error('Capture failed');
                         }
+                    })
+                    .catch(err => {
+                        console.error('Capture Error:', err);
+                        alert('Erro ao confirmar pagamento. O dinheiro pode ter sido retido. Contacte o suporte com o ID: ' + data.orderID);
+                        processPayment();
                     });
                 },
                 onError: function(err) {
