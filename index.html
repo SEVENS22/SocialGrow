@@ -1623,6 +1623,23 @@
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             setTimeout(() => document.getElementById('modal-input').focus(), 300);
+
+            // Auto-fill saved spin wheel coupon
+            const savedCoupon = localStorage.getItem('sg_spin_coupon');
+            if (savedCoupon) {
+                try {
+                    const coupon = JSON.parse(savedCoupon);
+                    validCoupons[coupon.code] = coupon.discount;
+                    document.getElementById('coupon-input').value = coupon.code;
+                    appliedCoupon = { code: coupon.code, discount: coupon.discount };
+                    document.getElementById('coupon-message').textContent = `Coupon applied! ${coupon.discount * 100}% OFF`;
+                    document.getElementById('coupon-message').className = 'text-xs mt-2 text-green-600 font-bold';
+                    document.getElementById('coupon-message').classList.remove('hidden');
+                    document.getElementById('discount-display').classList.remove('hidden');
+                    document.getElementById('discount-text').textContent = `${coupon.discount * 100}% OFF Applied!`;
+                    updateModalPrice();
+                } catch(e) {}
+            }
         }
 
         function closeBuyModal() {
@@ -1702,6 +1719,8 @@
                     .then(res => res.json())
                     .then(details => {
                         if (details.status === 'completed' || details.success) {
+                            // Clear used spin coupon
+                            localStorage.removeItem('sg_spin_coupon');
                             window.location.href = '/success?token=' + data.orderID;
                         } else {
                             throw new Error('Capture failed');
@@ -2043,6 +2062,9 @@
 
                 // Add coupon to valid coupons
                 validCoupons[prize.code] = prize.discount;
+
+                // Save won coupon to localStorage for auto-fill
+                localStorage.setItem('sg_spin_coupon', JSON.stringify({ code: prize.code, discount: prize.discount }));
 
                 btn.innerHTML = '<i class="fas fa-check mr-2"></i> CLAIMED!';
                 btn.classList.remove('from-primary-600', 'to-accent');
