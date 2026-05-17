@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Track Your Order | SocialGrow</title>
     <meta name="description" content="Track your SocialGrow order status. View delivery progress for Instagram followers, TikTok views, and YouTube subscribers.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <meta name="theme-color" content="#6491ff">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -16,6 +19,7 @@
                     colors: {
                         primary: { 50: '#f0f4ff', 100: '#e0e9ff', 200: '#c1d3ff', 300: '#a2bdff', 400: '#83a7ff', 500: '#6491ff', 600: '#5074cc', 700: '#3c5799', 800: '#283a66', 900: '#141d33' },
                         accent: '#FF3366',
+                        dark: { 900: '#0f172a', 800: '#1e293b', 700: '#334155' }
                     }
                 }
             }
@@ -25,37 +29,80 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .dark { color-scheme: dark; }
         .dark body { background: #0f172a; color: #f1f5f9; }
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #6491ff 0%, #FF3366 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .step-active .pulse-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in { animation: slideIn 0.5s ease forwards; }
     </style>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 min-h-screen">
+<body class="bg-[#F8FAFC] dark:bg-dark-900 text-slate-900 dark:text-slate-100 min-h-screen">
     <!-- Navigation -->
-    <nav class="glass dark:glass-dark fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl mx-auto rounded-2xl z-[100] bg-white/80 dark:bg-[#1e293b]/90 border border-white/20 dark:border-white/10 backdrop-blur-xl">
+    <nav class="glass fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl mx-auto rounded-2xl z-[100]">
         <div class="px-6 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
+            <a href="/" class="flex items-center space-x-2">
                 <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg">
                     <i class="fas fa-rocket text-white"></i>
                 </div>
-                <span class="text-xl font-bold tracking-tight dark:text-white">SocialGrow</span>
-            </div>
-            <a href="index.html" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary-600">Back to Home</a>
+                <span class="text-xl font-bold tracking-tight">SocialGrow</span>
+            </a>
+            <a href="/" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary-600 transition">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Home
+            </a>
         </div>
     </nav>
+
+    <!-- Background decoration -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-200 dark:bg-primary-900 rounded-full filter blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent rounded-full filter blur-[120px] opacity-20"></div>
+    </div>
 
     <!-- Main Content -->
     <main class="pt-32 pb-24 px-6 max-w-2xl mx-auto">
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold mb-4">Track Your <span class="text-primary-600">Order</span></h1>
-            <p class="text-slate-600 dark:text-slate-400">Enter your order ID or phone number to check your delivery status.</p>
+            <div class="inline-flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/30 px-4 py-1.5 rounded-full text-xs font-bold text-primary-600 dark:text-primary-400 mb-6">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Order Tracking</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Track Your <span class="text-gradient">Order</span></h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">Enter your order ID to check your delivery status in real-time.</p>
         </div>
 
         <!-- Search Form -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-[2.5rem] p-8 shadow-xl dark:shadow-2xl border border-slate-100 dark:border-slate-700">
+        <div class="bg-white dark:bg-dark-800 rounded-3xl p-8 shadow-xl border border-slate-100 dark:border-slate-700">
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Order ID or Phone Number</label>
-                    <input type="text" id="search-input" placeholder="Ex: #SG12345 ou seu WhatsApp" class="w-full bg-slate-50 dark:bg-[#334155] border-2 border-slate-200 dark:border-slate-600 px-5 py-4 rounded-2xl text-sm font-medium outline-none transition-all focus:border-primary-500 dark:text-white">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Order ID</label>
+                    <div class="relative">
+                        <i class="fas fa-hashtag absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="search-input" placeholder="Enter your order ID (e.g., SG_ABC123)" class="w-full bg-slate-50 dark:bg-dark-700 border-2 border-slate-200 dark:border-slate-600 pl-10 pr-5 py-4 rounded-2xl text-sm font-medium outline-none transition-all focus:border-primary-500 focus:shadow-lg dark:text-white dark:placeholder:text-slate-500">
+                    </div>
                 </div>
-                <button onclick="trackOrder()" class="w-full bg-primary-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-primary-700 transition shadow-xl flex items-center justify-center space-x-2">
+                <button onclick="trackOrder()" id="track-btn" class="w-full bg-primary-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-primary-700 transition shadow-lg shadow-primary-200 flex items-center justify-center space-x-2 active:scale-[0.98]">
                     <i class="fas fa-search"></i>
                     <span>TRACK ORDER</span>
                 </button>
@@ -64,90 +111,99 @@
 
         <!-- Order Status (Hidden by default) -->
         <div id="order-result" class="hidden mt-8">
-            <div class="bg-white dark:bg-[#1e293b] rounded-[2.5rem] p-8 shadow-xl border border-slate-100 dark:border-slate-700">
-                <div class="text-center mb-6">
-                    <div id="status-icon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-100">
-                        <i class="fas fa-check text-2xl text-green-600"></i>
+            <div class="bg-white dark:bg-dark-800 rounded-3xl p-8 shadow-xl border border-slate-100 dark:border-slate-700 animate-slide-in">
+                <!-- Status Header -->
+                <div class="text-center mb-8">
+                    <div id="status-icon" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-primary-100 dark:bg-primary-900/30">
+                        <i class="fas fa-clock text-3xl text-primary-600"></i>
                     </div>
-                    <h3 id="status-title" class="text-2xl font-bold">Order Found!</h3>
-                    <p id="status-subtitle" class="text-slate-600 dark:text-slate-400 mt-2">Your order is being processed</p>
+                    <h3 id="status-title" class="text-2xl font-bold">Processing Your Order</h3>
+                    <p id="status-subtitle" class="text-slate-500 dark:text-slate-400 mt-2">Your order is being prepared</p>
                 </div>
 
                 <!-- Progress Steps -->
-                <div class="relative">
-                    <div class="absolute top-5 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-700">
-                        <div id="progress-bar" class="h-full bg-primary-600 transition-all duration-500" style="width: 50%"></div>
+                <div class="relative mb-8">
+                    <div class="absolute top-5 left-6 right-6 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-1000 ease-out" style="width: 33%"></div>
                     </div>
                     <div class="flex justify-between relative">
-                        <div class="text-center">
-                            <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center text-white mx-auto mb-2">
-                                <i class="fas fa-check"></i>
+                        <div class="text-center step-active">
+                            <div class="relative">
+                                <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center text-white mx-auto mb-2 relative z-10">
+                                    <i class="fas fa-check text-sm"></i>
+                                </div>
                             </div>
-                            <p class="text-xs font-bold">Confirmed</p>
+                            <p class="text-xs font-bold text-primary-600">Confirmed</p>
                         </div>
-                        <div class="text-center">
-                            <div id="step-2" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 mx-auto mb-2">
-                                <i class="fas fa-spinner"></i>
+                        <div class="text-center" id="step-processing">
+                            <div id="step-2-icon" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 mx-auto mb-2 transition-all duration-500">
+                                <i class="fas fa-cog text-sm"></i>
                             </div>
-                            <p class="text-xs font-bold text-slate-500">Processing</p>
+                            <p class="text-xs font-bold text-slate-400" id="step-2-label">Processing</p>
                         </div>
-                        <div class="text-center">
-                            <div id="step-3" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 mx-auto mb-2">
-                                <i class="fas fa-rocket"></i>
+                        <div class="text-center" id="step-delivered">
+                            <div id="step-3-icon" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 mx-auto mb-2 transition-all duration-500">
+                                <i class="fas fa-rocket text-sm"></i>
                             </div>
-                            <p class="text-xs font-bold text-slate-500">Delivered</p>
+                            <p class="text-xs font-bold text-slate-400" id="step-3-label">Delivered</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Order Details -->
-                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-                    <div class="grid grid-cols-2 gap-4 text-sm">
+                <div class="bg-slate-50 dark:bg-dark-700 rounded-2xl p-6">
+                    <h4 class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Order Details</h4>
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <p class="text-slate-500 dark:text-slate-400">Order ID</p>
-                            <p id="order-id" class="font-bold dark:text-white">#SG12345</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500">Order ID</p>
+                            <p id="order-id" class="font-bold font-mono text-sm dark:text-white">#SG---</p>
                         </div>
                         <div>
-                            <p class="text-slate-500 dark:text-slate-400">Product</p>
-                            <p id="order-product" class="font-bold dark:text-white">1,000 Followers</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500">Product</p>
+                            <p id="order-product" class="font-bold text-sm dark:text-white">---</p>
                         </div>
                         <div>
-                            <p class="text-slate-500 dark:text-slate-400">Date</p>
-                            <p id="order-date" class="font-bold dark:text-white">May 12, 2026</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500">Date</p>
+                            <p id="order-date" class="font-bold text-sm dark:text-white">---</p>
                         </div>
                         <div>
-                            <p class="text-slate-500 dark:text-slate-400">Status</p>
-                            <p id="order-status" class="font-bold text-green-600">Processing</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500">Status</p>
+                            <p id="order-status" class="font-bold text-sm text-primary-600">Processing</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Support -->
-                <div class="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-2xl">
-                    <p class="text-sm text-center dark:text-slate-300">
-                        <i class="fab fa-whatsapp text-green-500 mr-2"></i>
-                        Need help? <a href="https://wa.me/258834592663" class="text-primary-600 font-bold">Chat with Support</a>
-                    </p>
+                <!-- Help Box -->
+                <div class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-900/30">
+                    <div class="flex items-center space-x-3">
+                        <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                        <div>
+                            <p class="text-sm font-bold text-green-700 dark:text-green-400">Need help with your order?</p>
+                            <a href="https://wa.me/258834592663" class="text-xs text-green-600 dark:text-green-500 underline">Chat with our support team</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Sample Order ID hint -->
+        <!-- Help Text -->
         <div class="mt-8 text-center">
-            <p class="text-sm text-slate-500 dark:text-slate-400">
+            <p class="text-sm text-slate-400 dark:text-slate-500">
                 <i class="fas fa-info-circle mr-1"></i>
-                Example: #SG123456 or your WhatsApp number
+                You can find your order ID in the confirmation email or WhatsApp message.
             </p>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-slate-900 py-8 text-white text-center">
-        <p class="text-slate-400 text-sm">&copy; 2026 SocialGrow. All rights reserved.</p>
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-slate-500 text-xs">&copy; 2026 SocialGrow Global. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
-        // Check for dark mode
+        // Dark mode
         if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         }
@@ -155,27 +211,56 @@
         function trackOrder() {
             const input = document.getElementById('search-input').value.trim();
             const result = document.getElementById('order-result');
+            const btn = document.getElementById('track-btn');
 
             if (!input) {
                 document.getElementById('search-input').classList.add('border-red-400');
+                document.getElementById('search-input').focus();
+                setTimeout(() => document.getElementById('search-input').classList.remove('border-red-400'), 2000);
                 return;
             }
 
-            // Show result with mock data (in real app, this would call an API)
-            document.getElementById('order-id').textContent = '#SG' + Math.random().toString(36).substr(2, 8).toUpperCase();
-            document.getElementById('order-product').textContent = '1,000 Instagram Followers';
-            document.getElementById('order-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            // Show loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>SEARCHING...</span>';
+            btn.disabled = true;
 
-            result.classList.remove('hidden');
-
-            // Simulate progress
+            // Simulate API call
             setTimeout(() => {
-                document.getElementById('progress-bar').style.width = '100%';
-                document.getElementById('step-2').classList.remove('bg-slate-200', 'text-slate-500');
-                document.getElementById('step-2').classList.add('bg-primary-600', 'text-white');
-                document.getElementById('order-status').textContent = 'Delivered';
-                document.getElementById('status-subtitle').textContent = 'Your order has been delivered!';
-            }, 2000);
+                // Generate mock data
+                const orderId = '#SG_' + input.replace(/[^a-zA-Z0-9]/g, '').substring(0, 8).toUpperCase();
+                document.getElementById('order-id').textContent = orderId || '#SG_UNKNOWN';
+                document.getElementById('order-product').textContent = '1,000 Instagram Followers';
+                document.getElementById('order-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                result.classList.remove('hidden');
+                btn.innerHTML = '<i class="fas fa-search"></i> <span>TRACK ORDER</span>';
+                btn.disabled = false;
+
+                // Animate progress to "Processing"
+                setTimeout(() => {
+                    document.getElementById('progress-bar').style.width = '66%';
+                    document.getElementById('step-2-icon').classList.remove('bg-slate-200', 'text-slate-400', 'dark:bg-slate-700');
+                    document.getElementById('step-2-icon').classList.add('bg-primary-600', 'text-white');
+                    document.getElementById('step-2-label').classList.remove('text-slate-400');
+                    document.getElementById('step-2-label').classList.add('text-primary-600');
+                    document.getElementById('status-subtitle').textContent = 'Your order is being processed';
+                }, 500);
+
+                // Animate progress to "Delivered"
+                setTimeout(() => {
+                    document.getElementById('progress-bar').style.width = '100%';
+                    document.getElementById('step-3-icon').classList.remove('bg-slate-200', 'text-slate-400', 'dark:bg-slate-700');
+                    document.getElementById('step-3-icon').classList.add('bg-green-500', 'text-white');
+                    document.getElementById('step-3-label').classList.remove('text-slate-400');
+                    document.getElementById('step-3-label').classList.add('text-green-600');
+                    document.getElementById('status-icon').className = 'w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-100 dark:bg-green-900/30';
+                    document.getElementById('status-icon').innerHTML = '<i class="fas fa-check-circle text-3xl text-green-500"></i>';
+                    document.getElementById('status-title').textContent = 'Order Delivered!';
+                    document.getElementById('status-subtitle').textContent = 'Your order has been completed successfully';
+                    document.getElementById('order-status').textContent = 'Delivered';
+                    document.getElementById('order-status').className = 'font-bold text-sm text-green-600';
+                }, 3000);
+            }, 1500);
         }
 
         // Enter key to search

@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SocialGrow | #1 Premium Social Media Growth Agency</title>
     <meta name="description" content="Get high-quality Instagram followers, TikTok views, and YouTube subscribers instantly. Safe, secure, and organic-style growth for creators and brands.">
-    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <meta name="theme-color" content="#6491ff">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yoursite.com/">
-    <meta property="og:title" content="SocialGrow | Premium Social Media Influence">
-    <meta property="og:description" content="Skyrocket your social presence with elite acceleration services.">
-    <meta property="og:image" content="https://yoursite.com/og-image.jpg">
+    <meta property="og:url" content="https://socialgrow-up.vercel.app/">
+    <meta property="og:title" content="SocialGrow | #1 Premium Social Media Growth Agency">
+    <meta property="og:description" content="Get high-quality Instagram followers, TikTok views, and YouTube subscribers instantly. Safe, secure, and organic-style growth.">
+    <meta property="og:image" content="https://socialgrow-up.vercel.app/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="SocialGrow | Premium Social Influence">
-    <meta property="twitter:description" content="Skyrocket your social presence with elite acceleration services.">
+    <meta property="twitter:url" content="https://socialgrow-up.vercel.app/">
+    <meta property="twitter:title" content="SocialGrow | #1 Premium Social Media Growth Agency">
+    <meta property="twitter:description" content="Get high-quality Instagram followers, TikTok views, and YouTube subscribers instantly.">
+    <meta property="twitter:image" content="https://socialgrow-up.vercel.app/og-image.jpg">
     
     <!-- Scripts & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,7 +57,7 @@
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "reviewCount": "15847"
+        "reviewCount": "150"
       }
     }
     </script>
@@ -73,6 +77,10 @@
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'reveal': 'reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.5s ease forwards',
+                        'scale-in': 'scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'shimmer': 'shimmer 2s linear infinite',
                     },
                     keyframes: {
                         float: {
@@ -82,6 +90,22 @@
                         reveal: {
                             '0%': { opacity: '0', transform: 'translateY(30px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
                         }
                     }
                 }
@@ -96,8 +120,8 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .reveal-on-scroll { opacity: 1; }
-        .reveal-on-scroll.active { animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
 
         .glass-dark {
             background: rgba(15, 23, 42, 0.8);
@@ -262,9 +286,448 @@
         .buy-modal.active .buy-modal-content {
             transform: scale(1) translateY(0);
         }
+
+        /* Shimmer effect for popular badge */
+        .badge-shimmer {
+            background: linear-gradient(90deg, #FF3366 0%, #ff6b8a 50%, #FF3366 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+
+        /* Back to top button */
+        #back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: rgba(100, 145, 255, 0.9);
+            backdrop-filter: blur(8px);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 90;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(100, 145, 255, 0.3);
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #back-to-top:hover {
+            background: rgba(100, 145, 255, 1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(100, 145, 255, 0.4);
+        }
+
+        /* Animated counter */
+        .counter-value {
+            display: inline-block;
+            min-width: 2ch;
+        }
+
+        /* Mobile menu animation */
+        #mobile-menu {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: top;
+        }
+        #mobile-menu.hidden {
+            opacity: 0;
+            transform: scaleY(0.95) translateY(-10px);
+            pointer-events: none;
+        }
+
+        /* Pulse ring for WhatsApp button */
+        .whatsapp-pulse::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 20px;
+            background: #25D366;
+            opacity: 0;
+            animation: whatsapp-ring 2s ease-out infinite;
+            z-index: -1;
+        }
+        @keyframes whatsapp-ring {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        /* Improved card hover */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-12px);
+        }
+
+        /* Smooth section transitions */
+        section {
+            transition: background-color 0.3s ease;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Notification badge pulse */
+        .notification-dot {
+            position: relative;
+        }
+        .notification-dot::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse 2s infinite;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #6491ff, #FF3366);
+            z-index: 999;
+            transition: width 0.1s ease;
+        }
+
+        /* Section Navigation Dots */
+        #section-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 95;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        #section-dots a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(100, 145, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #section-dots a.active {
+            background: #6491ff;
+            transform: scale(1.4);
+            box-shadow: 0 0 12px rgba(100, 145, 255, 0.5);
+        }
+        #section-dots a::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        #section-dots a:hover::after {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            #section-dots { display: none; }
+        }
+
+        /* Live Visitor Counter */
+        #live-visitors {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 95;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #334155;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        #live-visitors:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        .dark #live-visitors {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+
+        /* Ripple Effect on Buttons */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+            left: var(--ripple-x, 50%);
+            top: var(--ripple-y, 50%);
+        }
+        .ripple.animate::after {
+            animation: ripple-effect 0.6s ease-out;
+        }
+        @keyframes ripple-effect {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(0); opacity: 0; }
+        }
+
+        /* Spin Wheel Modal */
+        #spin-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        #spin-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spin-wheel {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            background: conic-gradient(
+                #6491ff 0deg 60deg,
+                #FF3366 60deg 120deg,
+                #22c55e 120deg 180deg,
+                #f59e0b 180deg 240deg,
+                #8b5cf6 240deg 300deg,
+                #ec4899 300deg 360deg
+            );
+        }
+        .spin-wheel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+        .spin-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #1e293b;
+            z-index: 3;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Floating Action Button - Quick Actions */
+        #quick-actions {
+            position: fixed;
+            bottom: 8px;
+            left: 24px;
+            z-index: 95;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+        .quick-action-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .quick-action-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .quick-action-btn span {
+            position: absolute;
+            left: 52px;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .quick-action-btn:hover span {
+            opacity: 1;
+        }
+
+        /* Toast notification improved */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            pointer-events: none;
+        }
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-[#F8FAFC] dark:bg-dark-900 text-slate-900 dark:text-slate-100 overflow-x-hidden transition-colors duration-300">
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Section Navigation Dots -->
+    <div id="section-dots">
+        <a href="#hero" data-label="Home" class="active" aria-label="Home"></a>
+        <a href="#instagram" data-label="Instagram" aria-label="Instagram"></a>
+        <a href="#tiktok" data-label="TikTok" aria-label="TikTok"></a>
+        <a href="#youtube" data-label="YouTube" aria-label="YouTube"></a>
+        <a href="#faq" data-label="FAQ" aria-label="FAQ"></a>
+    </div>
+
+    <!-- Live Visitor Counter -->
+    <div id="live-visitors">
+        <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+        </span>
+        <span><span id="visitor-count">47</span> people viewing now</span>
+    </div>
+
+    <!-- Quick Action Buttons (bottom-left, above notifications) -->
+    <div id="quick-actions">
+        <button class="quick-action-btn bg-purple-600" onclick="openSpinWheel()" aria-label="Spin & Win">
+            <i class="fas fa-gift"></i>
+            <span>Spin & Win!</span>
+        </button>
+    </div>
+
+    <!-- Spin Wheel Modal -->
+    <div id="spin-modal">
+        <div class="bg-white dark:bg-dark-800 rounded-3xl p-8 max-w-sm w-full mx-4 text-center relative">
+            <button onclick="closeSpinWheel()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                <i class="fas fa-times text-slate-600 dark:text-slate-300"></i>
+            </button>
+            <h3 class="text-2xl font-extrabold mb-2">Spin & Win!</h3>
+            <p class="text-slate-500 text-sm mb-6">Try your luck for an exclusive discount!</p>
+            <div class="relative mx-auto mb-6" style="width:280px;height:300px">
+                <div class="spin-pointer"></div>
+                <div class="spin-wheel" id="spin-wheel">
+                    <span style="position:absolute;top:25%;left:55%;transform:translate(-50%,-50%) rotate(30deg);font-size:11px;font-weight:800;color:white">10%</span>
+                    <span style="position:absolute;top:15%;left:75%;transform:translate(-50%,-50%) rotate(90deg);font-size:11px;font-weight:800;color:white">25%</span>
+                    <span style="position:absolute;top:55%;left:80%;transform:translate(-50%,-50%) rotate(150deg);font-size:11px;font-weight:800;color:white">5%</span>
+                    <span style="position:absolute;top:80%;left:60%;transform:translate(-50%,-50%) rotate(210deg);font-size:11px;font-weight:800;color:white">20%</span>
+                    <span style="position:absolute;top:80%;left:30%;transform:translate(-50%,-50%) rotate(270deg);font-size:11px;font-weight:800;color:white">15%</span>
+                    <span style="position:absolute;top:40%;left:15%;transform:translate(-50%,-50%) rotate(330deg);font-size:11px;font-weight:800;color:white">30%</span>
+                </div>
+            </div>
+            <button id="spin-btn" onclick="spinWheel()" class="w-full bg-gradient-to-r from-primary-600 to-accent text-white py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition shadow-xl active:scale-95">
+                <i class="fas fa-play mr-2"></i> SPIN NOW
+            </button>
+            <p id="spin-result" class="mt-4 text-lg font-bold hidden"></p>
+        </div>
+    </div>
 
     <!-- Notificação de Venda Recente -->
     <div id="recent-sale" class="glass shadow-2xl rounded-2xl p-4 border-l-4 border-primary-500 flex items-center space-x-4 max-w-sm">
@@ -297,6 +760,7 @@
                 <a href="#tiktok" class="hover:text-primary-600 transition-colors">TikTok</a>
                 <a href="#youtube" class="hover:text-primary-600 transition-colors">YouTube</a>
                 <a href="#faq" class="hover:text-primary-600 transition-colors">Support</a>
+                <a href="/track" class="hover:text-primary-600 transition-colors">Track Order</a>
             </div>
 
             <div class="flex items-center space-x-3">
@@ -321,17 +785,16 @@
                 <a href="#youtube" class="py-2 hover:text-primary-600 transition-colors">YouTube</a>
                 <a href="#testimonials" class="py-2 hover:text-primary-600 transition-colors">Testimonials</a>
                 <a href="#faq" class="py-2 hover:text-primary-600 transition-colors">Support</a>
+                <a href="/track" class="py-2 hover:text-primary-600 transition-colors">Track Order</a>
                 <a href="https://wa.me/258834592663" class="bg-primary-600 text-white px-5 py-3 rounded-xl font-bold text-center hover:bg-primary-700 transition">
                     GET STARTED
                 </a>
             </div>
         </div>
     </nav>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-40 pb-24 overflow-hidden">
+    <header id="hero" class="relative pt-40 pb-24 overflow-hidden">
         <!-- Abstract Background -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-40">
             <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-200 dark:bg-primary-600 rounded-full filter blur-[120px] animate-pulse-slow"></div>
@@ -376,7 +839,7 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                 <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
-                    <i class="fas fa-shield-check text-primary-500 mb-2"></i>
+                    <i class="fas fa-shield-halved text-primary-500 mb-2"></i>
                     <p class="text-xs font-bold text-slate-700 uppercase tracking-tighter">Secure Payment</p>
                 </div>
                 <div class="glass p-4 rounded-2xl border-white/50 transition-transform hover:scale-105">
@@ -505,6 +968,40 @@
         </div>
     </section>
 
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-dark-900 dark:to-dark-800 reveal-on-scroll">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary-600 mb-3 block">Why SocialGrow</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-4">The <span class="text-gradient">Smart Choice</span> for Growth</h2>
+                <p class="text-slate-500 text-lg max-w-xl mx-auto">We combine technology, quality, and support to deliver unmatched results.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group bg-white dark:bg-dark-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-300 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bolt text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lightning-Fast Delivery</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Orders start processing within 5-15 minutes. No waiting days for results.</p>
+                </div>
+                <div class="group bg-white dark:bg-dark-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-green-200 dark:hover:border-green-800 transition-all duration-300 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-halved text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">100% Safe & Secure</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">We never ask for passwords. All payments are encrypted via PayPal's secure platform.</p>
+                </div>
+                <div class="group bg-white dark:bg-dark-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-purple-200 dark:hover:border-purple-800 transition-all duration-300 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-rotate-left text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">90-Day Refill Guarantee</h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed">If any followers drop, we automatically refill them at no extra cost for 90 days.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Instagram Section -->
     <section id="instagram" class="py-24 max-w-7xl mx-auto px-6 reveal-on-scroll dark:bg-dark-900">
         <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
@@ -537,15 +1034,15 @@
                     <span class="text-5xl font-black text-slate-900 tracking-tighter">2.39</span>
                 </div>
 
-                <button onclick="openBuyModal('IG 500 Followers', 2.39, 'users', 'primary')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
+                <button onclick="openBuyModal('IG 500 Followers', 2.39, 'users', 'primary')" class="ripple w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary-600 transition shadow-xl shadow-slate-200 flex items-center justify-center space-x-2 group-hover:bg-primary-600 group-active:scale-95">
                     <span>COMPRAR</span>
                     <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
                 </button>
             </div>
 
             <!-- Card 2 (Popular) -->
-            <div class="bg-primary-600 p-8 rounded-[2.5rem] shadow-2xl shadow-primary-200 transform md:scale-105 relative border border-primary-500 text-white transition-all duration-300 hover:scale-[1.08] group">
-                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-accent text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">Elite Offer</div>
+            <div class="bg-primary-600 p-8 rounded-[2.5rem] shadow-2xl shadow-primary-200 transform md:scale-105 relative border border-primary-500 text-white transition-all duration-300 hover:scale-[1.08] group product-card">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 badge-shimmer text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">Elite Offer</div>
                 <div class="flex justify-between items-start mb-6">
                     <div class="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center">
                         <i class="fas fa-crown text-white"></i>
@@ -861,6 +1358,34 @@
         </div>
     </section>
 
+    <!-- Stats Section -->
+    <section class="py-20 bg-primary-600 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-[120px]"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent rounded-full filter blur-[120px]"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+                <div class="reveal-on-scroll">
+                    <p class="text-4xl md:text-5xl font-black mb-2 counter-value" data-target="15000">0</p>
+                    <p class="text-primary-200 text-sm font-semibold uppercase tracking-wider">Happy Clients</p>
+                </div>
+                <div class="reveal-on-scroll">
+                    <p class="text-4xl md:text-5xl font-black mb-2 counter-value" data-target="50000">0</p>
+                    <p class="text-primary-200 text-sm font-semibold uppercase tracking-wider">Orders Delivered</p>
+                </div>
+                <div class="reveal-on-scroll">
+                    <p class="text-4xl md:text-5xl font-black mb-2">4.9<span class="text-2xl">/5</span></p>
+                    <p class="text-primary-200 text-sm font-semibold uppercase tracking-wider">Average Rating</p>
+                </div>
+                <div class="reveal-on-scroll">
+                    <p class="text-4xl md:text-5xl font-black mb-2">24/7</p>
+                    <p class="text-primary-200 text-sm font-semibold uppercase tracking-wider">VIP Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-slate-900 py-24 text-white overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -872,11 +1397,12 @@
                         </div>
                         <span class="text-3xl font-black tracking-tighter">SocialGrow</span>
                     </div>
-                    <p class="text-slate-400 max-w-sm mb-8">Elevating digital influence through data-driven growth strategies. Join the elite elite circle of content creators.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-discord"></i></a>
+                    <p class="text-slate-400 max-w-sm mb-8">Elevating digital influence through data-driven growth strategies. Join the elite circle of content creators.</p>
+                    <div class="flex space-x-3">
+                        <a href="https://wa.me/258834592663" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-green-600 transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-600 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-primary-600 transition" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-indigo-600 transition" aria-label="Discord"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
                 <div>
@@ -895,14 +1421,14 @@
                         <li><a href="javascript:void(0)" onclick="showPolicy('privacy')" class="hover:text-white transition">Privacy Policy</a></li>
                         <li><a href="javascript:void(0)" onclick="showPolicy('refund')" class="hover:text-white transition">Refund Policy</a></li>
                         <li><a href="https://wa.me/258834592663" class="hover:text-white transition">Contact Us</a></li>
-                        <li><a href="track.html" class="hover:text-white transition">Track Order</a></li>
+                        <li><a href="/track" class="hover:text-white transition">Track Order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-slate-500 text-xs">© 2026 SocialGrow Global. All rights reserved. Not affiliated with Instagram, TikTok or YouTube.</p>
                 <div class="flex items-center space-x-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                    <i class="fas fa-lock-alt text-green-500"></i>
+                    <i class="fas fa-lock text-green-500"></i>
                     <span>SSL SECURED CHECKOUT</span>
                 </div>
             </div>
@@ -921,8 +1447,13 @@
         </div>
     </div>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- WhatsApp Floating -->
-    <a href="https://wa.me/258834592663" id="whatsapp-btn" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[100] group">
+    <a href="https://wa.me/258834592663" id="whatsapp-btn" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[100] group whatsapp-pulse">
         <i class="fab fa-whatsapp text-3xl"></i>
         <span class="absolute right-20 bg-white text-slate-900 px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Chat with Support</span>
     </a>
@@ -1320,16 +1851,59 @@
 
         // Scroll Animations with Intersection Observer
         const observerOptions = {
-            threshold: 0.1
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
+
+        // Counter Animation
+        function animateCounters() {
+            document.querySelectorAll('.counter-value[data-target]').forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const start = performance.now();
+
+                function update(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    counter.textContent = Math.floor(target * eased).toLocaleString() + '+';
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Counter observer
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.querySelector('.counter-value')?.closest('section');
+        if (statsSection) counterObserver.observe(statsSection);
 
         window.onload = () => {
             initTimer(900, document.getElementById('timer'));
@@ -1338,7 +1912,202 @@
 
             // Start observing scroll animations
             document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+            // Show spin wheel popup after 30 seconds if not shown today
+            const lastSpin = localStorage.getItem('sg_spin_date');
+            const today = new Date().toDateString();
+            if (lastSpin !== today) {
+                setTimeout(() => {
+                    openSpinWheel();
+                    localStorage.setItem('sg_spin_date', today);
+                }, 30000);
+            }
         };
+
+        // ===================== SCROLL PROGRESS BAR =====================
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // ===================== SECTION NAVIGATION DOTS =====================
+        const sectionDots = document.querySelectorAll('#section-dots a');
+        const sections = ['hero', 'instagram', 'tiktok', 'youtube', 'faq'];
+
+        function updateActiveDot() {
+            let current = '';
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom > 200) {
+                        current = id;
+                    }
+                }
+            });
+            sectionDots.forEach(dot => {
+                dot.classList.toggle('active', dot.getAttribute('href') === '#' + current);
+            });
+        }
+        window.addEventListener('scroll', updateActiveDot);
+
+        // ===================== LIVE VISITOR COUNTER =====================
+        const visitorCountEl = document.getElementById('visitor-count');
+        let visitorCount = 35 + Math.floor(Math.random() * 30);
+        visitorCountEl.textContent = visitorCount;
+
+        setInterval(() => {
+            const change = Math.random() > 0.5 ? 1 : -1;
+            visitorCount = Math.max(20, Math.min(80, visitorCount + change));
+            visitorCountEl.textContent = visitorCount;
+        }, 5000);
+
+        // ===================== RIPPLE EFFECT =====================
+        document.querySelectorAll('.ripple').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - 50;
+                const y = e.clientY - rect.top - 50;
+                this.style.setProperty('--ripple-x', x + 'px');
+                this.style.setProperty('--ripple-y', y + 'px');
+                this.classList.remove('animate');
+                void this.offsetWidth; // force reflow
+                this.classList.add('animate');
+                setTimeout(() => this.classList.remove('animate'), 600);
+            });
+        });
+
+        // ===================== TOAST NOTIFICATIONS =====================
+        function showToast(message, icon = 'fa-check-circle', color = '#22c55e', duration = 3000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas ${icon}" style="color:${color}"></i> ${message}`;
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, duration);
+        }
+
+        // Show welcome toast
+        setTimeout(() => {
+            showToast('Welcome to SocialGrow! Get 20% OFF with code FLASH20', 'fa-tag', '#6491ff', 5000);
+        }, 2000);
+
+        // ===================== SPIN WHEEL =====================
+        let isSpinning = false;
+        const spinPrizes = [
+            { label: '10%', code: 'SPIN10', discount: 0.10, degrees: 30 },
+            { label: '25%', code: 'SPIN25', discount: 0.25, degrees: 90 },
+            { label: '5%',  code: 'SPIN5',  discount: 0.05, degrees: 150 },
+            { label: '20%', code: 'SPIN20', discount: 0.20, degrees: 210 },
+            { label: '15%', code: 'SPIN15', discount: 0.15, degrees: 270 },
+            { label: '30%', code: 'SPIN30', discount: 0.30, degrees: 330 }
+        ];
+
+        function openSpinWheel() {
+            document.getElementById('spin-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSpinWheel() {
+            document.getElementById('spin-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const btn = document.getElementById('spin-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> SPINNING...';
+
+            const wheel = document.getElementById('spin-wheel');
+            const prizeIndex = Math.floor(Math.random() * spinPrizes.length);
+            const prize = spinPrizes[prizeIndex];
+            const spins = 5 + Math.floor(Math.random() * 3);
+            const totalRotation = spins * 360 + prize.degrees;
+
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+            setTimeout(() => {
+                const result = document.getElementById('spin-result');
+                result.classList.remove('hidden');
+                result.innerHTML = `<span class="text-green-500">You won ${prize.label} OFF!</span><br><span class="text-sm text-slate-500 font-normal">Use code: <b class="text-primary-600">${prize.code}</b></span>`;
+
+                // Add coupon to valid coupons
+                validCoupons[prize.code] = prize.discount;
+
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> CLAIMED!';
+                btn.classList.remove('from-primary-600', 'to-accent');
+                btn.classList.add('bg-green-500');
+
+                showToast(`You won ${prize.label} OFF! Code: ${prize.code}`, 'fa-trophy', '#f59e0b', 5000);
+
+                // Auto-apply to next purchase
+                setTimeout(() => {
+                    closeSpinWheel();
+                    // Reset for next time
+                    wheel.style.transition = 'none';
+                    wheel.style.transform = 'rotate(0deg)';
+                    setTimeout(() => wheel.style.transition = '', 50);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-play mr-2"></i> SPIN NOW';
+                    btn.classList.add('from-primary-600', 'to-accent');
+                    btn.classList.remove('bg-green-500');
+                    result.classList.add('hidden');
+                    isSpinning = false;
+                }, 3000);
+            }, 4200);
+        }
+
+        // Close spin modal on background click
+        document.getElementById('spin-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeSpinWheel();
+        });
+
+        // ===================== KEYBOARD SHORTCUTS =====================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeBuyModal();
+                closePolicy();
+                closeSpinWheel();
+            }
+        });
+
+        // ===================== SMOOTH SCROLL FOR NAV DOTS =====================
+        document.querySelectorAll('#section-dots a').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(dot.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===================== PRODUCT CARD HOVER SOUND (visual feedback) =====================
+        document.querySelectorAll('button[onclick*="openBuyModal"]').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // ===================== ADD RIPPLE TO ALL BUY BUTTONS =====================
+        document.querySelectorAll('button[onclick*="openBuyModal"]').forEach(btn => {
+            if (!btn.classList.contains('ripple')) {
+                btn.classList.add('ripple');
+            }
+        });
     </script>
 </body>
 </html>

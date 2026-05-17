@@ -4,51 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Successful | SocialGrow</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <meta name="theme-color" content="#22c55e">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-                    colors: { primary: { 500: '#6491ff', 600: '#5074cc' } }
+                    colors: {
+                        primary: { 50: '#f0f4ff', 100: '#e0e9ff', 500: '#6491ff', 600: '#5074cc' }
+                    }
                 }
             }
         }
     </script>
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(-45deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+        .checkmark-animate { animation: checkmark 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            animation: confetti 1s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center">
-    <div class="text-center p-8 max-w-md">
-        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i class="fas fa-check text-4xl text-green-500"></i>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-6">
+    <!-- Confetti Container -->
+    <div id="confetti" class="fixed inset-0 pointer-events-none z-50"></div>
+
+    <div class="text-center max-w-md w-full">
+        <!-- Success Icon -->
+        <div class="relative inline-block mb-8">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto checkmark-animate">
+                <i class="fas fa-check text-4xl text-green-500"></i>
+            </div>
+            <div class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                <i class="fas fa-star text-white text-xs"></i>
+            </div>
         </div>
-        <h1 class="text-3xl font-bold text-slate-900 mb-4">Payment Successful!</h1>
-        <p class="text-slate-600 mb-8">Thank you for your purchase. Your order is being processed and you will receive a confirmation on WhatsApp shortly.</p>
 
-        <div class="bg-white rounded-2xl p-6 shadow-lg mb-8">
-            <p class="text-sm text-slate-500 mb-2">Order ID</p>
-            <p id="order-id" class="font-mono font-bold text-lg">Loading...</p>
+        <!-- Title -->
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Payment Successful!</h1>
+        <p class="text-slate-500 text-lg mb-8">Thank you for your purchase. Your order is now being processed.</p>
+
+        <!-- Order Card -->
+        <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order ID</span>
+                <button onclick="copyOrderId()" class="text-xs text-primary-600 hover:text-primary-700 font-semibold">
+                    <i class="fas fa-copy mr-1"></i> Copy
+                </button>
+            </div>
+            <p id="order-id" class="font-mono font-bold text-xl text-slate-900 bg-slate-50 py-3 px-4 rounded-xl">Processing...</p>
         </div>
 
-        <a href="https://wa.me/258834592663" class="inline-flex items-center space-x-2 bg-green-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-600 transition">
-            <i class="fab fa-whatsapp"></i>
-            <span>Contact Support</span>
-        </a>
+        <!-- Info Cards -->
+        <div class="grid grid-cols-2 gap-3 mb-8">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                <i class="fas fa-clock text-primary-500 text-lg mb-2"></i>
+                <p class="text-xs font-bold text-slate-700">Delivery Time</p>
+                <p class="text-xs text-slate-500">5-15 minutes</p>
+            </div>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                <i class="fas fa-shield-halved text-green-500 text-lg mb-2"></i>
+                <p class="text-xs font-bold text-slate-700">Guarantee</p>
+                <p class="text-xs text-slate-500">90-day refill</p>
+            </div>
+        </div>
 
-        <a href="/" class="block mt-4 text-slate-500 hover:text-primary-600">← Back to Home</a>
+        <!-- Action Buttons -->
+        <div class="space-y-3">
+            <a href="https://wa.me/258834592663?text=Hi!%20I%20just%20placed%20an%20order.%20Order%20ID%20from%20payment." class="flex items-center justify-center space-x-2 bg-[#25D366] text-white px-6 py-4 rounded-2xl font-bold hover:bg-[#20BD5A] transition shadow-lg shadow-green-200 w-full">
+                <i class="fab fa-whatsapp text-xl"></i>
+                <span>Contact Support via WhatsApp</span>
+            </a>
+            <a href="/" class="flex items-center justify-center space-x-2 bg-slate-100 text-slate-700 px-6 py-4 rounded-2xl font-bold hover:bg-slate-200 transition w-full">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+
+        <!-- Trust note -->
+        <p class="mt-6 text-xs text-slate-400">
+            <i class="fas fa-lock mr-1"></i>
+            Your payment is secured by PayPal
+        </p>
     </div>
 
     <script>
-        // Extract order ID from URL params (PayPal uses 'token')
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         const orderIdDisplay = document.getElementById('order-id');
 
         if (token) {
-            orderIdDisplay.textContent = "Processing payment...";
-            
-            // Call capture API
             fetch('/api/capture-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -59,17 +121,45 @@
                 if (data.success) {
                     orderIdDisplay.textContent = data.orderId || token;
                     orderIdDisplay.classList.add('text-green-600');
+                    // Trigger confetti
+                    createConfetti();
                 } else {
-                    orderIdDisplay.textContent = "Error capturing payment. Please contact support.";
-                    orderIdDisplay.classList.add('text-red-500');
+                    orderIdDisplay.textContent = token;
+                    orderIdDisplay.classList.add('text-orange-500');
                 }
             })
             .catch(err => {
                 console.error('Capture error:', err);
-                orderIdDisplay.textContent = "Connection error. Your order will be processed manually.";
+                orderIdDisplay.textContent = token || 'Error';
+                orderIdDisplay.classList.add('text-orange-500');
             });
         } else {
-            orderIdDisplay.textContent = "No order token found.";
+            orderIdDisplay.textContent = 'No order token found';
+            orderIdDisplay.classList.add('text-slate-400');
+        }
+
+        function copyOrderId() {
+            const text = orderIdDisplay.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('[onclick="copyOrderId()"]');
+                btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+                setTimeout(() => btn.innerHTML = '<i class="fas fa-copy mr-1"></i> Copy', 2000);
+            });
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#6491ff', '#FF3366', '#22c55e', '#f59e0b', '#8b5cf6'];
+            for (let i = 0; i < 30; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.top = (50 + Math.random() * 30) + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(piece);
+            }
+            setTimeout(() => container.remove(), 2000);
         }
     </script>
 </body>

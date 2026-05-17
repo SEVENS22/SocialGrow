@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /success
+Disallow: /cancel
+Disallow: /server/
 
 Sitemap: https://socialgrow-up.vercel.app/sitemap.xml

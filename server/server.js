@@ -5,7 +5,62 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
+
+// ============ RATE LIMITING ============
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX = 10; // max requests per window
+
+function rateLimit(req, res, next) {
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const now = Date.now();
+
+    if (!rateLimitMap.has(ip)) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+        return next();
+    }
+
+    const record = rateLimitMap.get(ip);
+    if (now > record.resetTime) {
+        record.count = 1;
+        record.resetTime = now + RATE_LIMIT_WINDOW;
+        return next();
+    }
+
+    record.count++;
+    if (record.count > RATE_LIMIT_MAX) {
+        return res.status(429).json({
+            error: 'Too many requests',
+            message: 'Please try again later'
+        });
+    }
+    next();
+}
+
+// Clean up old entries periodically
+setInterval(() => {
+    const now = Date.now();
+    for (const [ip, record] of rateLimitMap) {
+        if (now > record.resetTime) rateLimitMap.delete(ip);
+    }
+}, 60000);
+
+// ============ INPUT SANITIZATION ============
+function sanitize(str) {
+    if (typeof str !== 'string') return '';
+    return str
+        .replace(/[<>]/g, '') // Remove HTML tags
+        .replace(/[*_`\[\]]/g, '') // Remove Markdown special chars
+        .trim()
+        .substring(0, 200); // Limit length
+}
+
+function validatePrice(price) {
+    const num = parseFloat(price);
+    if (isNaN(num) || num <= 0 || num > 10000) return null;
+    return Math.round(num * 100) / 100; // Round to 2 decimal places
+}
 
 // ============ CONFIGURATION ============
 const PAYPAL_MODE = process.env.PAYPAL_MODE || 'sandbox';
@@ -33,11 +88,11 @@ if (!paypalConfigured) {
 
 // ============ HELPERS ============
 
-// Enviar notificação para o Telegram
+// Telegram notification
 async function sendTelegramNotification(message) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
-    
+
     if (!token || !chatId) return;
 
     try {
@@ -52,7 +107,7 @@ async function sendTelegramNotification(message) {
     }
 }
 
-// Get Access Token do PayPal
+// Get PayPal Access Token
 async function getAccessToken() {
     const auth = Buffer.from(`${config.clientId}:${config.clientSecret}`).toString('base64');
 
@@ -70,27 +125,40 @@ async function getAccessToken() {
     return response.data.access_token;
 }
 
+// ============ VALID COUPONS ============
+const validCoupons = {
+    'FLASH20': 0.20,
+    'SOCIAL10': 0.10,
+    'WELCOME15': 0.15,
+    'GROW2026': 0.25
+};
+
 // ============ ENDPOINTS ============
 
 /**
  * GET /api/health
- * Health check do servidor
  */
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
         mode: PAYPAL_MODE,
+        paypalConfigured,
         timestamp: new Date().toISOString()
     });
 });
 
 /**
  * POST /api/create-order
- * Cria uma ordem de pagamento no PayPal
+ * Creates a PayPal payment order
  */
-app.post('/api/create-order', async (req, res) => {
+app.post('/api/create-order', rateLimit, async (req, res) => {
     try {
-        const { product, price, username, coupon } = req.body;
+        let { product, price, username, coupon } = req.body;
+
+        // Sanitize inputs
+        product = sanitize(product);
+        username = sanitize(username);
+        coupon = sanitize(coupon).toUpperCase();
 
         if (!product || !price) {
             return res.status(400).json({
@@ -98,17 +166,19 @@ app.post('/api/create-order', async (req, res) => {
             });
         }
 
-        // Calcula desconto se houver cupom
-        let finalPrice = price;
-        const validCoupons = {
-            'FLASH20': 0.20,
-            'SOCIAL10': 0.10,
-            'WELCOME15': 0.15,
-            'GROW2026': 0.25
-        };
+        // Validate price
+        const validatedPrice = validatePrice(price);
+        if (!validatedPrice) {
+            return res.status(400).json({
+                error: 'Invalid price'
+            });
+        }
 
-        if (coupon && validCoupons[coupon.toUpperCase()]) {
-            finalPrice = price * (1 - validCoupons[coupon.toUpperCase()]);
+        // Apply coupon discount
+        let finalPrice = validatedPrice;
+        if (coupon && validCoupons[coupon]) {
+            finalPrice = validatedPrice * (1 - validCoupons[coupon]);
+            finalPrice = Math.round(finalPrice * 100) / 100;
         }
 
         if (!paypalConfigured) {
@@ -120,7 +190,6 @@ app.post('/api/create-order', async (req, res) => {
 
         const accessToken = await getAccessToken();
 
-        // Cria a ordem no PayPal
         const orderResponse = await axios.post(
             `${config.baseUrl}/v2/checkout/orders`,
             {
@@ -162,19 +231,19 @@ app.post('/api/create-order', async (req, res) => {
         console.error('PayPal API Error:', error.response?.data || error.message);
         res.status(500).json({
             error: 'Failed to create PayPal order',
-            details: error.response?.data || error.message
+            message: 'Please try again or contact support'
         });
     }
 });
 
 /**
  * POST /api/capture-order
- * Confirma/captura um pagamento após aprovação
+ * Captures/confirms a PayPal payment
  */
-app.post('/api/capture-order', async (req, res) => {
+app.post('/api/capture-order', rateLimit, async (req, res) => {
     try {
-        const orderId = req.body.orderId || req.body.token;
-        
+        const orderId = sanitize(req.body.orderId || req.body.token);
+
         if (!orderId) {
             return res.status(400).json({ error: 'Order ID or Token is required' });
         }
@@ -193,15 +262,20 @@ app.post('/api/capture-order', async (req, res) => {
         );
 
         const capture = captureResponse.data;
-        
+
         if (capture.status === 'COMPLETED') {
             const unit = capture.purchase_units[0];
-            const meta = JSON.parse(unit.payments.captures[0].custom_id || '{}');
+            let meta = {};
+            try {
+                meta = JSON.parse(unit.payments.captures[0].custom_id || '{}');
+            } catch (e) {
+                meta = {};
+            }
 
-            // Notificar Telegram
+            // Send Telegram notification
             const message = `💰 *NOVO PAGAMENTO RECEBIDO!*\n\n` +
-                          `👤 *Usuário:* ${meta.username || 'Não informado'}\n` +
-                          `📦 *Produto:* ${meta.product || 'Serviço'}\n` +
+                          `👤 *Usuário:* ${sanitize(meta.username) || 'Não informado'}\n` +
+                          `📦 *Produto:* ${sanitize(meta.product) || 'Serviço'}\n` +
                           `💵 *Valor:* $${meta.price || '0.00'}\n` +
                           `🆔 *ID:* ${capture.id}\n\n` +
                           `🚀 Já pode adicionar os seguidores!`;
@@ -218,19 +292,22 @@ app.post('/api/capture-order', async (req, res) => {
         }
 
     } catch (error) {
-        // Se já foi capturado anteriormente, retorna sucesso
+        // Handle already captured orders
         if (error.response?.data?.name === 'ORDER_ALREADY_CAPTURED') {
             return res.json({ success: true, status: 'completed' });
         }
-        
+
         console.error('Capture Error:', error.response?.data || error.message);
-        res.status(500).json({ error: 'Failed to capture order' });
+        res.status(500).json({
+            error: 'Failed to capture order',
+            message: 'Please contact support with your order ID'
+        });
     }
 });
 
 /**
  * POST /api/verify-webhook
- * Recebe notificações automáticas do PayPal
+ * PayPal webhook receiver
  */
 app.post('/api/verify-webhook', async (req, res) => {
     try {
@@ -240,8 +317,7 @@ app.post('/api/verify-webhook', async (req, res) => {
         if (event.event_type === 'CHECKOUT.ORDER.APPROVED') {
             const orderId = event.resource.id;
             console.log(`🚀 Automating capture for order: ${orderId}`);
-            
-            // Tenta capturar automaticamente
+
             const accessToken = await getAccessToken();
             await axios.post(
                 `${config.baseUrl}/v2/checkout/orders/${orderId}/capture`,
@@ -259,13 +335,13 @@ app.post('/api/verify-webhook', async (req, res) => {
         res.json({ received: true });
     } catch (error) {
         console.error('Webhook Error:', error.response?.data || error.message);
-        res.json({ received: true }); // Sempre responde 200 para o PayPal
+        res.json({ received: true }); // Always respond 200 for PayPal
     }
 });
 
 /**
  * GET /api/products
- * Retorna lista de produtos disponíveis
+ * Returns available products
  */
 app.get('/api/products', (req, res) => {
     res.json({
@@ -288,8 +364,19 @@ app.get('/api/products', (req, res) => {
     });
 });
 
+// ============ ERROR HANDLING ============
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({
+        error: 'Internal server error',
+        message: 'Please try again later'
+    });
+});
+
 // ============ START SERVER ============
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 SocialGrow Server running on port ${PORT}`);
+    console.log(`📡 PayPal Mode: ${PAYPAL_MODE}`);
+    console.log(`💳 PayPal Configured: ${paypalConfigured}`);
 });
