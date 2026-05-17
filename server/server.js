@@ -274,11 +274,11 @@ app.post('/api/capture-order', rateLimit, async (req, res) => {
 
             // Send Telegram notification
             const message = `💰 *NOVO PAGAMENTO RECEBIDO!*\n\n` +
-                          `👤 *Usuário:* ${sanitize(meta.username) || 'Não informado'}\n` +
-                          `📦 *Produto:* ${sanitize(meta.product) || 'Serviço'}\n` +
-                          `💵 *Valor:* $${meta.price || '0.00'}\n` +
-                          `🆔 *ID:* ${capture.id}\n\n` +
-                          `🚀 Já pode adicionar os seguidores!`;
+                `👤 *Usuário:* ${sanitize(meta.username) || 'Não informado'}\n` +
+                `📦 *Produto:* ${sanitize(meta.product) || 'Serviço'}\n` +
+                `💵 *Valor:* $${meta.price || '0.00'}\n` +
+                `🆔 *ID:* ${capture.id}\n\n` +
+                `🚀 Já pode adicionar os seguidores!`;
 
             await sendTelegramNotification(message);
 
